@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <meta charset="utf-8">
+  <title>Global reaction route search</title>
+  <style>
+    form.userInput {
+      margin: 7%
+    }
+  </style>
+<head>
+<body>
+
+  <form method="post" class="userInput" action="result.html">{% csrf_token %}
+    reactant
+    <input type="text" name="reactant"><br>
+    product
+    <input type="text" name="product"><br><br>
+    <button type="submit" class="submitButton">Submit</button>
+  </form>
+  <div id='result'></div>
+
+  <script>
+    function showInput(reactant, product) {
+      var reactantSmiles = document.querySelector('[name="reactant"]').value;
+      var productSmiles = document.querySelector('[name="product"]').value;
+      var resultDiv = document.querySelector('#result');
+      resultDiv.innerHTML = reactantSmiles + productSmiles
+    }
+    var submitButton = document.querySelector('button.submitButton');
+    submitButton.addEventListener('click', showInput);
+
+  </script>
+</body>

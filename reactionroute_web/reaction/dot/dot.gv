@@ -1,0 +1,148 @@
+digraph G  {
+concentrate = true
+    "BrBr.C=C" [image = "search/static/pics/BrBr.C=C.svg", label = "0.0 kcal/mol", shape = none, labelloc = b]
+    "BrBr.C=C" -> "BrCCBr";
+    "BrBr.C=C" -> "C=C[BrH+].[Br-]";
+    "BrBr.C=C" -> "C=[CH+].[Br-].Br";
+    "BrBr.C=C" -> "[CH2-]C[Br+]Br";
+    "BrBr.C=C" -> "Br[BrH+].[CH-]=C";
+    "BrBr.C=C" -> "[Br+]1CC1.[Br-]";
+    "BrBr.C=C" -> "BrBr.C#C.[H][H]";
+    "BrBr.C=C" -> "BrC[CH2+].[Br-]";
+    "BrBr.C=C" -> "BrC=C.Br";
+    "BrCCBr" [image = "search/static/pics/BrCCBr.svg", label = "0.0 kcal/mol", shape = none, labelloc = b]
+    "C=C[BrH+].[Br-]" [image = "search/static/pics/C=C[BrH+].[Br-].svg", label = "0.0 kcal/mol", shape = none, labelloc = b]
+    "C=C[BrH+].[Br-]" -> "C#C.Br.Br";
+    "C=C[BrH+].[Br-]" -> "CC=[Br+].[Br-]";
+    "C=C[BrH+].[Br-]" -> "[CH2-]C=[Br+].Br";
+    "C=C[BrH+].[Br-]" -> "[CH2-]C(Br)[BrH+]";
+    "C=C[BrH+].[Br-]" -> "C[CH+]Br.[Br-]";
+    "C=C[BrH+].[Br-]" -> "C=[CH+].[Br-].Br";
+    "C=C[BrH+].[Br-]" -> "BrC=[CH+].[Br-].[H][H]";
+    "C=C[BrH+].[Br-]" -> "Br[C+]=C.[Br-].[H][H]";
+    "C=C[BrH+].[Br-]" -> "C=C=[Br+].[Br-].[H][H]";
+    "C=C[BrH+].[Br-]" -> "[CH-]=C[BrH+].Br";
+    "C=C[BrH+].[Br-]" -> "Br[BrH+].[CH-]=C";
+    "C=C[BrH+].[Br-]" -> "C#C[BrH+].[Br-].[H][H]";
+    "C=C[BrH+].[Br-]" -> "[Br+]1C=C1.[Br-].[H][H]";
+    "C=C[BrH+].[Br-]" -> "BrC[CH2+].[Br-]";
+    "C=C[BrH+].[Br-]" -> "C#C.[Br-].[BrH2+]";
+    "C=C[BrH+].[Br-]" -> "BrC=C.Br";
+    "C=[CH+].[Br-].Br" [image = "search/static/pics/C=[CH+].[Br-].Br.svg", label = "0.0 kcal/mol", shape = none, labelloc = b]
+    "C=[CH+].[Br-].Br" -> "C=C[BrH+].[Br-]";
+    "C=[CH+].[Br-].Br" -> "C[CH+]Br.[Br-]";
+    "C=[CH+].[Br-].Br" -> "BrC=[CH+].[Br-].[H][H]";
+    "C=[CH+].[Br-].Br" -> "Br[C+]=C.[Br-].[H][H]";
+    "C=[CH+].[Br-].Br" -> "C#[C+].[Br-].Br.[H][H]";
+    "C=[CH+].[Br-].Br" -> "BrC[CH2+].[Br-]";
+    "C=[CH+].[Br-].Br" -> "BrC=C.Br";
+    "[CH2-]C[Br+]Br" [image = "search/static/pics/[CH2-]C[Br+]Br.svg", label = "0.0 kcal/mol", shape = none, labelloc = b]
+    "[CH2-]C[Br+]Br" -> "BrCCBr";
+    "[CH2-]C[Br+]Br" -> "C=C[BrH+].[Br-]";
+    "[CH2-]C[Br+]Br" -> "[CH2-]C=[Br+].Br";
+    "[CH2-]C[Br+]Br" -> "[CH2-]C(Br)[BrH+]";
+    "[CH2-]C[Br+]Br" -> "BrBr.C=C";
+    "[CH2-]C[Br+]Br" -> "[CH-](Br)C[BrH+]";
+    "[CH2-]C[Br+]Br" -> "Br[BrH+].[CH-]=C";
+    "[CH2-]C[Br+]Br" -> "[CH-]=C[Br+]Br.[H][H]";
+    "[CH2-]C[Br+]Br" -> "[Br+]1CC1.[Br-]";
+    "[CH2-]C[Br+]Br" -> "Br[CH2+].[CH2-]Br";
+    "[CH2-]C[Br+]Br" -> "[CH2-]Br.C=[Br+]";
+    "[CH2-]C[Br+]Br" -> "CC=[Br+].[Br-]";
+    "[CH2-]C[Br+]Br" -> "BrC=C.Br";
+    "Br[BrH+].[CH-]=C" [image = "search/static/pics/Br[BrH+].[CH-]=C.svg", label = "0.0 kcal/mol", shape = none, labelloc = b]
+    "Br[BrH+].[CH-]=C" -> "C#C.Br.Br";
+    "Br[BrH+].[CH-]=C" -> "[CH-]=C[Br+]Br.[H][H]";
+    "Br[BrH+].[CH-]=C" -> "C=C[BrH+].[Br-]";
+    "Br[BrH+].[CH-]=C" -> "[C-]#C.Br[BrH+].[H][H]";
+    "Br[BrH+].[CH-]=C" -> "[C-](=C)Br.[BrH2+]";
+    "Br[BrH+].[CH-]=C" -> "[CH-]=CBr.[BrH2+]";
+    "Br[BrH+].[CH-]=C" -> "[CH2-]C(Br)[BrH+]";
+    "Br[BrH+].[CH-]=C" -> "[CH2-]C[Br+]Br";
+    "Br[BrH+].[CH-]=C" -> "[CH-]=C[BrH+].Br";
+    "Br[BrH+].[CH-]=C" -> "BrBr.C=C";
+    "Br[BrH+].[CH-]=C" -> "[CH-](Br)C[BrH+]";
+    "Br[BrH+].[CH-]=C" -> "BrBr.C#C.[H][H]";
+    "Br[BrH+].[CH-]=C" -> "C#C.[Br-].[BrH2+]";
+    "Br[BrH+].[CH-]=C" -> "BrC=C.Br";
+    "[Br+]1CC1.[Br-]" [image = "search/static/pics/[Br+]1CC1.[Br-].svg", label = "0.0 kcal/mol", shape = none, labelloc = b]
+    "[Br+]1CC1.[Br-]" -> "BrCCBr";
+    "[Br+]1CC1.[Br-]" -> "C=C[BrH+].[Br-]";
+    "[Br+]1CC1.[Br-]" -> "C[CH+]Br.[Br-]";
+    "[Br+]1CC1.[Br-]" -> "[CH2-]C=[Br+].Br";
+    "[Br+]1CC1.[Br-]" -> "[CH2-]C[Br+]Br";
+    "[Br+]1CC1.[Br-]" -> "CC=[Br+].[Br-]";
+    "[Br+]1CC1.[Br-]" -> "[Br+]1C=C1.[Br-].[H][H]";
+    "[Br+]1CC1.[Br-]" -> "BrC[CH2+].[Br-]";
+    "[Br+]1CC1.[Br-]" -> "BrC=C.Br";
+    "BrBr.C#C.[H][H]" [image = "search/static/pics/BrBr.C^C.[H][H].svg", label = "0.0 kcal/mol", shape = none, labelloc = b]
+    "BrBr.C#C.[H][H]" -> "C#C.Br.Br";
+    "BrBr.C#C.[H][H]" -> "[CH-]=C[Br+]Br.[H][H]";
+    "BrBr.C#C.[H][H]" -> "C$C.BrBr.[H][H].[H][H]";
+    "BrBr.C#C.[H][H]" -> "C#C[BrH+].[Br-].[H][H]";
+    "BrBr.C#C.[H][H]" -> "BrC=[CH+].[Br-].[H][H]";
+    "BrBr.C#C.[H][H]" -> "BrC#C.Br.[H][H]";
+    "BrBr.C#C.[H][H]" -> "[C-]#C.Br[BrH+].[H][H]";
+    "BrBr.C#C.[H][H]" -> "C#[C+].[Br-].Br.[H][H]";
+    "BrBr.C#C.[H][H]" -> "BrBr.C=C";
+    "BrBr.C#C.[H][H]" -> "BrC=CBr.[H][H]";
+    "BrBr.C#C.[H][H]" -> "C#C.[Br-].[BrH2+]";
+    "BrBr.C#C.[H][H]" -> "[Br+]1C=C1.[Br-].[H][H]";
+    "BrC[CH2+].[Br-]" [image = "search/static/pics/BrC[CH2+].[Br-].svg", label = "0.0 kcal/mol", shape = none, labelloc = b]
+    "BrC[CH2+].[Br-]" -> "[Br+]1CC1.[Br-]";
+    "BrC[CH2+].[Br-]" -> "Br[CH2+].[CH2-]Br";
+    "BrC[CH2+].[Br-]" -> "BrCCBr";
+    "BrC[CH2+].[Br-]" -> "BrC=[CH+].[Br-].[H][H]";
+    "BrC[CH2+].[Br-]" -> "C=[CH+].[Br-].Br";
+    "BrC=C.Br" [image = "search/static/pics/BrC=C.Br.svg", label = "0.0 kcal/mol", shape = none, labelloc = b]
+    "BrC=C.Br" -> "C=C[BrH+].[Br-]";
+    "BrC=C.Br" -> "[CH-](Br)C[BrH+]";
+    "BrC=C.Br" -> "C=C=[Br+].[Br-].[H][H]";
+    "BrC=C.Br" -> "BrCCBr";
+    "BrC=C.Br" -> "C=[CH+].[Br-].Br";
+    "BrC=C.Br" -> "[CH-]=CBr.[BrH2+]";
+    "BrC=C.Br" -> "Br[BrH+].[CH-]=C";
+    "BrC=C.Br" -> "[CH-]=C=[Br+].Br.[H][H]";
+    "BrC=C.Br" -> "BrC(=C)Br.[H][H]";
+    "BrC=C.Br" -> "BrC=CBr.[H][H]";
+    "BrC=C.Br" -> "CC(Br)Br";
+    "BrC=C.Br" -> "C[CH+]Br.[Br-]";
+    "BrC=C.Br" -> "BrC=[CH+].[Br-].[H][H]";
+    "BrC=C.Br" -> "BrC#C.Br.[H][H]";
+    "BrC=C.Br" -> "[CH2-]C=[Br+].Br";
+    "BrC=C.Br" -> "CC=[Br+].[Br-]";
+    "BrC=C.Br" -> "C#C.Br.Br";
+    "BrC=C.Br" -> "Br[C+]=C.[Br-].[H][H]";
+    "BrC=C.Br" -> "[CH2-]C(Br)[BrH+]";
+    "BrC=C.Br" -> "[CH-]=C[BrH+].Br";
+    "BrC=C.Br" -> "[C-](=C)Br.[BrH2+]";
+    "BrC=C.Br" -> "BrBr.C=C";
+    "BrC=C.Br" -> "BrC[CH2+].[Br-]";
+    "BrC=C.Br" -> "C#C.[Br-].[BrH2+]";
+    "C#C.Br.Br" [image = "search/static/pics/C^C.Br.Br.svg", label = "0.0 kcal/mol", shape = none, labelloc = b]
+    "CC=[Br+].[Br-]" [image = "search/static/pics/CC=[Br+].[Br-].svg", label = "0.0 kcal/mol", shape = none, labelloc = b]
+    "[CH2-]C=[Br+].Br" [image = "search/static/pics/[CH2-]C=[Br+].Br.svg", label = "0.0 kcal/mol", shape = none, labelloc = b]
+    "[CH2-]C(Br)[BrH+]" [image = "search/static/pics/[CH2-]C(Br)[BrH+].svg", label = "0.0 kcal/mol", shape = none, labelloc = b]
+    "C[CH+]Br.[Br-]" [image = "search/static/pics/C[CH+]Br.[Br-].svg", label = "0.0 kcal/mol", shape = none, labelloc = b]
+    "BrC=[CH+].[Br-].[H][H]" [image = "search/static/pics/BrC=[CH+].[Br-].[H][H].svg", label = "0.0 kcal/mol", shape = none, labelloc = b]
+    "Br[C+]=C.[Br-].[H][H]" [image = "search/static/pics/Br[C+]=C.[Br-].[H][H].svg", label = "0.0 kcal/mol", shape = none, labelloc = b]
+    "C=C=[Br+].[Br-].[H][H]" [image = "search/static/pics/C=C=[Br+].[Br-].[H][H].svg", label = "0.0 kcal/mol", shape = none, labelloc = b]
+    "[CH-]=C[BrH+].Br" [image = "search/static/pics/[CH-]=C[BrH+].Br.svg", label = "0.0 kcal/mol", shape = none, labelloc = b]
+    "C#C[BrH+].[Br-].[H][H]" [image = "search/static/pics/C^C[BrH+].[Br-].[H][H].svg", label = "0.0 kcal/mol", shape = none, labelloc = b]
+    "[Br+]1C=C1.[Br-].[H][H]" [image = "search/static/pics/[Br+]1C=C1.[Br-].[H][H].svg", label = "0.0 kcal/mol", shape = none, labelloc = b]
+    "C#C.[Br-].[BrH2+]" [image = "search/static/pics/C^C.[Br-].[BrH2+].svg", label = "0.0 kcal/mol", shape = none, labelloc = b]
+    "C#[C+].[Br-].Br.[H][H]" [image = "search/static/pics/C^[C+].[Br-].Br.[H][H].svg", label = "0.0 kcal/mol", shape = none, labelloc = b]
+    "[CH-](Br)C[BrH+]" [image = "search/static/pics/[CH-](Br)C[BrH+].svg", label = "0.0 kcal/mol", shape = none, labelloc = b]
+    "[CH-]=C[Br+]Br.[H][H]" [image = "search/static/pics/[CH-]=C[Br+]Br.[H][H].svg", label = "0.0 kcal/mol", shape = none, labelloc = b]
+    "Br[CH2+].[CH2-]Br" [image = "search/static/pics/Br[CH2+].[CH2-]Br.svg", label = "0.0 kcal/mol", shape = none, labelloc = b]
+    "[CH2-]Br.C=[Br+]" [image = "search/static/pics/[CH2-]Br.C=[Br+].svg", label = "0.0 kcal/mol", shape = none, labelloc = b]
+    "[C-]#C.Br[BrH+].[H][H]" [image = "search/static/pics/[C-]^C.Br[BrH+].[H][H].svg", label = "0.0 kcal/mol", shape = none, labelloc = b]
+    "[C-](=C)Br.[BrH2+]" [image = "search/static/pics/[C-](=C)Br.[BrH2+].svg", label = "0.0 kcal/mol", shape = none, labelloc = b]
+    "[CH-]=CBr.[BrH2+]" [image = "search/static/pics/[CH-]=CBr.[BrH2+].svg", label = "0.0 kcal/mol", shape = none, labelloc = b]
+    "C$C.BrBr.[H][H].[H][H]" [image = "search/static/pics/C$C.BrBr.[H][H].[H][H].svg", label = "0.0 kcal/mol", shape = none, labelloc = b]
+    "BrC#C.Br.[H][H]" [image = "search/static/pics/BrC^C.Br.[H][H].svg", label = "0.0 kcal/mol", shape = none, labelloc = b]
+    "BrC=CBr.[H][H]" [image = "search/static/pics/BrC=CBr.[H][H].svg", label = "0.0 kcal/mol", shape = none, labelloc = b]
+    "[CH-]=C=[Br+].Br.[H][H]" [image = "search/static/pics/[CH-]=C=[Br+].Br.[H][H].svg", label = "0.0 kcal/mol", shape = none, labelloc = b]
+    "BrC(=C)Br.[H][H]" [image = "search/static/pics/BrC(=C)Br.[H][H].svg", label = "0.0 kcal/mol", shape = none, labelloc = b]
+    "CC(Br)Br" [image = "search/static/pics/CC(Br)Br.svg", label = "0.0 kcal/mol", shape = none, labelloc = b]
+}
