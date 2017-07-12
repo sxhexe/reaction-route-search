@@ -28,6 +28,8 @@ def getCanonicalSmiles(mol):
     return conv.WriteString(mol, True)
 
 def fromSmiToMol(smiles):
+    if smiles is None:
+        print("smiles is None in fromSmiToMol")
     conv = ob.OBConversion()
     conv.SetInFormat("smi")
     mol = ob.OBMol()

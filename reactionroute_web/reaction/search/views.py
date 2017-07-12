@@ -11,6 +11,10 @@ def result(request):
     logging.basicConfig(filename = "result", level=logging.INFO)
     reactant = request.POST["reactant"]
     product = request.POST["product"]
+    if isinstance(reactant, unicode):
+        reactant = reactant.encode("ascii")
+    if isinstance(product, unicode):
+        product = product.encode("ascii")
     rr = reactionroute.ReactionRoute(reactantString=reactant, productString=product)
     head, target= rr.isomerSearch()
     rr.printTextReactionMap(head)
