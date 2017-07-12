@@ -1,0 +1,1 @@
+/usr/bin/c++    -pthread -O2 -g -DNDEBUG -O2 -g  -Wl,--enable-new-dtags -Wl,--fatal-warnings -Wl,--no-undefined -lc -Wl,--enable-new-dtags -Wl,--fatal-warnings -Wl,--no-undefined -lc   CMakeFiles/roundtrip.dir/roundtrip.o  -o ../bin/roundtrip -rdynamic ../lib/libopenbabel.so.5.0.0 -lm -ldl -lz -Wl,-rpath,/home/reactionroutesearch/reaction-route-search/openbabel2.4.1Build/lib:: 
