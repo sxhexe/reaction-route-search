@@ -467,6 +467,57 @@ namespace OpenBabel
     //! Get index for vector<OBFFParameter> ...
     int GetParameterIdx(int a, int b, int c, int d, std::vector<OBFFParameter> &parameter);
 
+
+    /*! Check if two atoms are in the same ring. [NOTE: this function uses SSSR,
+     *  this means that not all rings are found for bridged rings. This causes
+     *  some problems with the MMFF94 validation.]
+     *  \param a atom a
+     *  \param b atom b
+     *  \return true if atom a and b are in the same ring
+     */
+    bool IsInSameRing(OBAtom* a, OBAtom* b);
+
+    // general variables
+    OBMol 	_mol; //!< Molecule to be evaluated or minimized
+    bool 	_init; //!< Used to make sure we only parse the parameter file once, when needed
+    std::string	_parFile; //! < parameter file name
+    bool 	_validSetup; //!< was the last call to Setup succesfull
+    double	*_gradientPtr; //!< pointer to the gradients (used by AddGradient(), minimization functions, ...)
+    // logging variables
+    std::ostream* _logos; //!< Output for logfile
+    char 	_logbuf[BUFF_SIZE+1]; //!< Temporary buffer for logfile output
+    int 	_loglvl; //!< Log level for output
+    int 	_origLogLevel;
+    // conformer genereation (rotor search) variables
+    int 	_current_conformer; //!< used to hold i for current conformer (needed by UpdateConformers)
+    std::vector<double> _energies; //!< used to hold the energies for all conformers
+    // minimization variables
+    double 	_econv, _gconv, _e_n1; //!< Used for conjugate gradients and steepest descent(Initialize and TakeNSteps)
+    int 	_cstep, _nsteps; //!< Used for conjugate gradients and steepest descent(Initialize and TakeNSteps)
+    double 	*_grad1; //!< Used for conjugate gradients and steepest descent(Initialize and TakeNSteps)
+    unsigned int _ncoords; //!< Number of coordinates for conjugate gradients
+    int         _linesearch; //!< LineSearch type
+    // molecular dynamics variables
+    double 	_timestep; //!< Molecular dynamics time step in picoseconds
+    double 	_temp; //!< Molecular dynamics temperature in Kelvin
+    double 	*_velocityPtr; //!< pointer to the velocities
+    // contraint varibles
+    static OBFFConstraints _constraints; //!< Constraints
+    static unsigned int _fixAtom; //!< SetFixAtom()/UnsetFixAtom()
+    static unsigned int _ignoreAtom; //!< SetIgnoreAtom()/UnsetIgnoreAtom()
+    // cut-off variables
+    bool 	_cutoff; //!< true = cut-off enabled
+    double 	_rvdw; //!< VDW cut-off distance
+    double 	_rele; //!< Electrostatic cut-off distance
+    OBBitVec	_vdwpairs; //!< VDW pairs that should be calculated
+    OBBitVec	_elepairs; //!< Electrostatic pairs that should be calculated
+    int 	_pairfreq; //!< The frequence to update non-bonded pairs
+    // group variables
+    std::vector<OBBitVec> _intraGroup; //!< groups for which intra-molecular interactions should be calculated
+    std::vector<OBBitVec> _interGroup; //!< groups for which intra-molecular interactions should be calculated
+    std::vector<std::pair<OBBitVec, OBBitVec> > _interGroups; //!< groups for which intra-molecular
+                                                              //!< interactions should be calculated
+  public:
     /*! Calculate the potential energy function derivative numerically with
      *  repect to the coordinates of atom with index a (this vector is the gradient)
      *
@@ -530,56 +581,6 @@ namespace OpenBabel
       //      memset(_gradientPtr, '\0', sizeof(double)*_ncoords);
     }
 
-    /*! Check if two atoms are in the same ring. [NOTE: this function uses SSSR,
-     *  this means that not all rings are found for bridged rings. This causes
-     *  some problems with the MMFF94 validation.]
-     *  \param a atom a
-     *  \param b atom b
-     *  \return true if atom a and b are in the same ring
-     */
-    bool IsInSameRing(OBAtom* a, OBAtom* b);
-
-    // general variables
-    OBMol 	_mol; //!< Molecule to be evaluated or minimized
-    bool 	_init; //!< Used to make sure we only parse the parameter file once, when needed
-    std::string	_parFile; //! < parameter file name
-    bool 	_validSetup; //!< was the last call to Setup succesfull
-    double	*_gradientPtr; //!< pointer to the gradients (used by AddGradient(), minimization functions, ...)
-    // logging variables
-    std::ostream* _logos; //!< Output for logfile
-    char 	_logbuf[BUFF_SIZE+1]; //!< Temporary buffer for logfile output
-    int 	_loglvl; //!< Log level for output
-    int 	_origLogLevel;
-    // conformer genereation (rotor search) variables
-    int 	_current_conformer; //!< used to hold i for current conformer (needed by UpdateConformers)
-    std::vector<double> _energies; //!< used to hold the energies for all conformers
-    // minimization variables
-    double 	_econv, _gconv, _e_n1; //!< Used for conjugate gradients and steepest descent(Initialize and TakeNSteps)
-    int 	_cstep, _nsteps; //!< Used for conjugate gradients and steepest descent(Initialize and TakeNSteps)
-    double 	*_grad1; //!< Used for conjugate gradients and steepest descent(Initialize and TakeNSteps)
-    unsigned int _ncoords; //!< Number of coordinates for conjugate gradients
-    int         _linesearch; //!< LineSearch type
-    // molecular dynamics variables
-    double 	_timestep; //!< Molecular dynamics time step in picoseconds
-    double 	_temp; //!< Molecular dynamics temperature in Kelvin
-    double 	*_velocityPtr; //!< pointer to the velocities
-    // contraint varibles
-    static OBFFConstraints _constraints; //!< Constraints
-    static unsigned int _fixAtom; //!< SetFixAtom()/UnsetFixAtom()
-    static unsigned int _ignoreAtom; //!< SetIgnoreAtom()/UnsetIgnoreAtom()
-    // cut-off variables
-    bool 	_cutoff; //!< true = cut-off enabled
-    double 	_rvdw; //!< VDW cut-off distance
-    double 	_rele; //!< Electrostatic cut-off distance
-    OBBitVec	_vdwpairs; //!< VDW pairs that should be calculated
-    OBBitVec	_elepairs; //!< Electrostatic pairs that should be calculated
-    int 	_pairfreq; //!< The frequence to update non-bonded pairs
-    // group variables
-    std::vector<OBBitVec> _intraGroup; //!< groups for which intra-molecular interactions should be calculated
-    std::vector<OBBitVec> _interGroup; //!< groups for which intra-molecular interactions should be calculated
-    std::vector<std::pair<OBBitVec, OBBitVec> > _interGroups; //!< groups for which intra-molecular
-                                                              //!< interactions should be calculated
-  public:
     /*! Clone the current instance. May be desirable in multithreaded environments,
      *  Should be deleted after use
      */
