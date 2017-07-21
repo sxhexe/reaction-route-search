@@ -1,4 +1,4 @@
-prefix=/home/reactionroutesearch/reaction-route-search/openbabel2.4.1Install
+prefix=/home/ls/reaction-route-search/openbabel2.4.1Install
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib
 includedir=${prefix}/include

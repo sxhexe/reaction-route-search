@@ -1843,3 +1843,1848 @@ INFO:root:                     nStep = 3
 INFO:root:targetSmiles = BrCCBr
 INFO:root:targetLeastStep = 2
 INFO:root:===============End of the isomer search===============
+INFO:root:reactant = BrBr.C=C
+INFO:root:printing the molecule
+INFO:root:#Put Keywords Here, check Charge and Multiplicity.
+
+ 
+
+0  1
+Br          0.00000         0.00000         0.00000
+Br          0.00000         0.00000         0.00000
+C           0.00000         0.00000         0.00000
+C           0.00000         0.00000         0.00000
+H           0.00000         0.00000         0.00000
+H           0.00000         0.00000         0.00000
+H           0.00000         0.00000         0.00000
+H           0.00000         0.00000         0.00000
+INFO:root:product = BrCCBr
+INFO:root:=========================================================
+INFO:root:                     nStep = 1
+INFO:root:***************************************************
+INFO:root:             processing a new molecule
+INFO:root:atoms in zeroElecGivers
+INFO:root:atoms in twoElecGivers
+INFO:root:2 35
+INFO:root:1 35
+INFO:root:atoms in zeroElecTakers
+INFO:root:4 6
+INFO:root:3 6
+INFO:root:atoms in twoElecTakers
+INFO:root:2 35
+INFO:root:4 6
+INFO:root:1 35
+INFO:root:3 6
+INFO:root:--------attempting non-cyclic concerted two bonds breakings and two bond formations---------
+INFO:root:newSmiles = BrC[CH2+].[Br-]
+INFO:root:new molecule found!
+INFO:root:energy base line is 0.0
+INFO:root:not screening energy, adding it directly
+INFO:root:newSmiles = [Br+]1CC1.[Br-]
+INFO:root:new molecule found!
+INFO:root:energy base line is 0.0
+INFO:root:not screening energy, adding it directly
+INFO:root:newSmiles = C=C[BrH+].[Br-]
+INFO:root:new molecule found!
+INFO:root:energy base line is 0.0
+INFO:root:not screening energy, adding it directly
+INFO:root:newSmiles = C=C[BrH+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC[CH2+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [Br+]1CC1.[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C=C[BrH+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C=C[BrH+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C=[CH+].[Br-].Br
+INFO:root:new molecule found!
+INFO:root:energy base line is 0.0
+INFO:root:not screening energy, adding it directly
+INFO:root:newSmiles = C=C[BrH+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C=[CH+].[Br-].Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C=C[BrH+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C=[CH+].[Br-].Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C=C[BrH+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C=[CH+].[Br-].Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C=C[BrH+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:--------attempting non-cyclic concerted two bonds breakings and two bond formations---------
+INFO:root:newSmiles = BrBr.[CH2-][CH2+]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH2-]C[Br+]Br
+INFO:root:new molecule found!
+INFO:root:energy base line is 0.0
+INFO:root:not screening energy, adding it directly
+INFO:root:newSmiles = [CH2-]C[Br+]Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = Br[BrH+].[CH-]=C
+INFO:root:new molecule found!
+INFO:root:energy base line is 0.0
+INFO:root:not screening energy, adding it directly
+INFO:root:newSmiles = Br[BrH+].[CH-]=C
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrBr.[CH-]=[CH+].[H][H]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = BrBr.[CH-]=[CH+].[H][H]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = Br[BrH+].[CH-]=C
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = Br[BrH+].[CH-]=C
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrBr.[CH-]=[CH+].[H][H]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = BrBr.[CH-]=[CH+].[H][H]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:--------attempting non-cyclic concerted two bonds breakings and two bond formations---------
+INFO:root:newSmiles = BrC[CH2+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [Br+]1CC1.[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C=C[BrH+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C=C[BrH+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC[CH2+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [Br+]1CC1.[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C=C[BrH+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C=C[BrH+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C=[CH+].[Br-].Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C=C[BrH+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C=[CH+].[Br-].Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C=C[BrH+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C=[CH+].[Br-].Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C=C[BrH+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C=[CH+].[Br-].Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C=C[BrH+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:--------attempting non-cyclic concerted two bonds breakings and two bond formations---------
+INFO:root:newSmiles = BrBr.[CH2-][CH2+]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH2-]C[Br+]Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH2-]C[Br+]Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = Br[BrH+].[CH-]=C
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = Br[BrH+].[CH-]=C
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrBr.[CH-]=[CH+].[H][H]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = BrBr.[CH-]=[CH+].[H][H]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = Br[BrH+].[CH-]=C
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = Br[BrH+].[CH-]=C
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrBr.[CH-]=[CH+].[H][H]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = BrBr.[CH-]=[CH+].[H][H]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:--------attempting cyclic concerted two bonds breakings and two bond formations----------
+INFO:root:newSmiles = BrCCBr
+INFO:root:target found!!!
+INFO:root:new molecule found!
+INFO:root:energy base line is 0.0
+INFO:root:not screening energy, adding it directly
+INFO:root:newSmiles = BrC=C.Br
+INFO:root:new molecule found!
+INFO:root:energy base line is 0.0
+INFO:root:not screening energy, adding it directly
+INFO:root:newSmiles = BrC=C.Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrCCBr
+INFO:root:target found!!!
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC=C.Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC=C.Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC=C.Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC=C.Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC=C.Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC=C.Br
+INFO:root:This molecule has been processed
+INFO:root:--------attempting cyclic concerted two bonds breakings and two bond formations----------
+INFO:root:newSmiles = BrCCBr
+INFO:root:target found!!!
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC=C.Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC=C.Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrCCBr
+INFO:root:target found!!!
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC=C.Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC=C.Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC=C.Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC=C.Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC=C.Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC=C.Br
+INFO:root:This molecule has been processed
+INFO:root:--------attempting cyclic concerted two bonds breakings and two bond formations----------
+INFO:root:newSmiles = BrCCBr
+INFO:root:target found!!!
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrCCBr
+INFO:root:target found!!!
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC=C.Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC=C.Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrBr.C#C.[H][H]
+INFO:root:new molecule found!
+INFO:root:energy base line is 0.0
+INFO:root:not screening energy, adding it directly
+INFO:root:newSmiles = BrBr.C#C.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC=C.Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC=C.Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrBr.C#C.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrBr.C#C.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:--------attempting cyclic concerted two bonds breakings and two bond formations----------
+INFO:root:newSmiles = BrCCBr
+INFO:root:target found!!!
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrCCBr
+INFO:root:target found!!!
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC=C.Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC=C.Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrBr.C#C.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrBr.C#C.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC=C.Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC=C.Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrBr.C#C.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrBr.C#C.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:--------attempting cyclic concerted two bonds breakings and two bond formations----------
+INFO:root:newSmiles = BrC=C.Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC=C.Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrBr.C#C.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrBr.C#C.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:--------attempting cyclic concerted two bonds breakings and two bond formations----------
+INFO:root:newSmiles = BrC=C.Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC=C.Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrBr.C#C.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrBr.C#C.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:--------attempting cyclic concerted two bonds breakings and two bond formations----------
+INFO:root:newSmiles = BrC=C.Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC=C.Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrBr.C#C.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrBr.C#C.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:--------attempting cyclic concerted two bonds breakings and two bond formations----------
+INFO:root:newSmiles = BrC=C.Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC=C.Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrBr.C#C.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrBr.C#C.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:=========================================================
+INFO:root:                     nStep = 2
+INFO:root:***************************************************
+INFO:root:             processing a new molecule
+INFO:root:atoms in zeroElecGivers
+INFO:root:4 6
+INFO:root:atoms in twoElecGivers
+INFO:root:2 35
+INFO:root:1 35
+INFO:root:atoms in zeroElecTakers
+INFO:root:3 6
+INFO:root:atoms in twoElecTakers
+INFO:root:1 35
+INFO:root:3 6
+INFO:root:newSmiles = BrCCBr
+INFO:root:target found!!!
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [Br+]1CC1.[Br-]
+INFO:root:This molecule has been processed
+INFO:root:--------attempting non-cyclic concerted two bonds breakings and two bond formations---------
+INFO:root:newSmiles = [CH2+][CH2+].[Br-].[Br-]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = BrC[CH2+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C=[CH+].[Br-].Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C=[CH+].[Br-].Br
+INFO:root:This molecule has been processed
+INFO:root:--------attempting non-cyclic concerted two bonds breakings and two bond formations---------
+INFO:root:newSmiles = [CH2-][Br+][CH2+].[Br-]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = Br[CH2+].[CH2-]Br
+INFO:root:new molecule found!
+INFO:root:energy base line is 0.0
+INFO:root:not screening energy, adding it directly
+INFO:root:newSmiles = [CH-]([CH2+])[BrH+].[Br-]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH-](Br)[CH2+].Br
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH-]([CH2+])[BrH+].[Br-]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH-](Br)[CH2+].Br
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = BrBr.[CH2-][CH2+]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH2-][CH+][BrH+].[Br-]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH2-][CH+][BrH+].[Br-]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH2-][CH+][BrH+].[Br-]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH2-][CH+][BrH+].[Br-]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:--------attempting cyclic concerted two bonds breakings and two bond formations----------
+INFO:root:newSmiles = C=[CH+].[Br-].Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C=[CH+].[Br-].Br
+INFO:root:This molecule has been processed
+INFO:root:--------attempting cyclic concerted two bonds breakings and two bond formations----------
+INFO:root:--------attempting cyclic concerted two bonds breakings and two bond formations----------
+INFO:root:newSmiles = BrC=[CH+].[Br-].[H][H]
+INFO:root:new molecule found!
+INFO:root:energy base line is 0.0
+INFO:root:not screening energy, adding it directly
+INFO:root:newSmiles = BrC=[CH+].[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC=[CH+].[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC=[CH+].[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C=[CH+].[Br-].Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C=[CH+].[Br-].Br
+INFO:root:This molecule has been processed
+INFO:root:--------attempting cyclic concerted two bonds breakings and two bond formations----------
+INFO:root:newSmiles = C=[CH+].[Br-].Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC=[CH+].[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC=[CH+].[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C=[CH+].[Br-].Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC=[CH+].[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC=[CH+].[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:--------attempting cyclic concerted two bonds breakings and two bond formations----------
+INFO:root:newSmiles = BrC=[CH+].[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC=[CH+].[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:--------attempting cyclic concerted two bonds breakings and two bond formations----------
+INFO:root:newSmiles = BrC=[CH+].[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC=[CH+].[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:--------attempting cyclic concerted two bonds breakings and two bond formations----------
+INFO:root:newSmiles = BrC=[CH+].[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC=[CH+].[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C=[CH+].[Br-].Br
+INFO:root:This molecule has been processed
+INFO:root:--------attempting cyclic concerted two bonds breakings and two bond formations----------
+INFO:root:newSmiles = BrC=[CH+].[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC=[CH+].[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C=[CH+].[Br-].Br
+INFO:root:This molecule has been processed
+INFO:root:***************************************************
+INFO:root:             processing a new molecule
+INFO:root:atoms in zeroElecGivers
+INFO:root:atoms in twoElecGivers
+INFO:root:2 35
+INFO:root:atoms in zeroElecTakers
+INFO:root:4 6
+INFO:root:3 6
+INFO:root:atoms in twoElecTakers
+INFO:root:1 35
+INFO:root:3 6
+INFO:root:4 6
+INFO:root:--------attempting non-cyclic concerted two bonds breakings and two bond formations---------
+INFO:root:newSmiles = BrC[CH2+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrCCBr
+INFO:root:target found!!!
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC=C.Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC=C.Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C[CH+]Br.[Br-]
+INFO:root:new molecule found!
+INFO:root:energy base line is 0.0
+INFO:root:not screening energy, adding it directly
+INFO:root:newSmiles = C[CH+]Br.[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC[CH2+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrCCBr
+INFO:root:target found!!!
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC=C.Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC=C.Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C[CH+]Br.[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C[CH+]Br.[Br-]
+INFO:root:This molecule has been processed
+INFO:root:--------attempting non-cyclic concerted two bonds breakings and two bond formations---------
+INFO:root:newSmiles = [CH2-][Br+][CH2+].[Br-]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH2-][Br+]CBr
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH2-]C[Br+]Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH2-]C=[Br+].Br
+INFO:root:new molecule found!
+INFO:root:energy base line is 0.0
+INFO:root:not screening energy, adding it directly
+INFO:root:newSmiles = [CH2-]C=[Br+].Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH2-][CH+][BrH+].[Br-]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH2-][CH+][BrH+].[Br-]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH-]([CH2+])[BrH+].[Br-]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH-]1C[Br+]1.Br
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH-]1[CH+][Br+]1.[Br-].[H][H]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH-]1[CH+][Br+]1.[Br-].[H][H]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH-]([CH2+])[BrH+].[Br-]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH-]1C[Br+]1.Br
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH-]1[CH+][Br+]1.[Br-].[H][H]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH-]1[CH+][Br+]1.[Br-].[H][H]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:--------attempting non-cyclic concerted two bonds breakings and two bond formations---------
+INFO:root:newSmiles = [CH2-][Br+][CH2+].[Br-]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH2-][Br+]CBr
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH2-]C[Br+]Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH2-]C=[Br+].Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH2-]C=[Br+].Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH2-][CH+][BrH+].[Br-]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH2-][CH+][BrH+].[Br-]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH-]([CH2+])[BrH+].[Br-]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH-]1C[Br+]1.Br
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH-]1[CH+][Br+]1.[Br-].[H][H]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH-]1[CH+][Br+]1.[Br-].[H][H]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH-]([CH2+])[BrH+].[Br-]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH-]1C[Br+]1.Br
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH-]1[CH+][Br+]1.[Br-].[H][H]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH-]1[CH+][Br+]1.[Br-].[H][H]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:--------attempting cyclic concerted two bonds breakings and two bond formations----------
+INFO:root:newSmiles = C=C[BrH+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C=C[BrH+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = CC=[Br+].[Br-]
+INFO:root:new molecule found!
+INFO:root:energy base line is 0.0
+INFO:root:not screening energy, adding it directly
+INFO:root:newSmiles = CC=[Br+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C=C[BrH+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C=C[BrH+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = CC=[Br+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = CC=[Br+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:--------attempting cyclic concerted two bonds breakings and two bond formations----------
+INFO:root:--------attempting cyclic concerted two bonds breakings and two bond formations----------
+INFO:root:newSmiles = C=C[BrH+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = CC=[Br+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [Br+]1C=C1.[Br-].[H][H]
+INFO:root:new molecule found!
+INFO:root:energy base line is 0.0
+INFO:root:not screening energy, adding it directly
+INFO:root:newSmiles = [Br+]1C=C1.[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C=C[BrH+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = CC=[Br+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [Br+]1C=C1.[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [Br+]1C=C1.[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = CC=[Br+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = CC=[Br+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C=C[BrH+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C=C[BrH+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:--------attempting cyclic concerted two bonds breakings and two bond formations----------
+INFO:root:newSmiles = CC=[Br+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = CC=[Br+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C=C[BrH+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C=C[BrH+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C=C[BrH+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = CC=[Br+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [Br+]1C=C1.[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [Br+]1C=C1.[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C=C[BrH+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = CC=[Br+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [Br+]1C=C1.[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [Br+]1C=C1.[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:--------attempting cyclic concerted two bonds breakings and two bond formations----------
+INFO:root:newSmiles = CC=[Br+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [Br+]1C=C1.[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [Br+]1C=C1.[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C=C[BrH+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:--------attempting cyclic concerted two bonds breakings and two bond formations----------
+INFO:root:newSmiles = CC=[Br+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [Br+]1C=C1.[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [Br+]1C=C1.[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C=C[BrH+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:--------attempting cyclic concerted two bonds breakings and two bond formations----------
+INFO:root:newSmiles = CC=[Br+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [Br+]1C=C1.[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [Br+]1C=C1.[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C=C[BrH+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:--------attempting cyclic concerted two bonds breakings and two bond formations----------
+INFO:root:newSmiles = CC=[Br+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [Br+]1C=C1.[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [Br+]1C=C1.[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C=C[BrH+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:***************************************************
+INFO:root:             processing a new molecule
+INFO:root:atoms in zeroElecGivers
+INFO:root:atoms in twoElecGivers
+INFO:root:2 35
+INFO:root:atoms in zeroElecTakers
+INFO:root:3 6
+INFO:root:4 6
+INFO:root:atoms in twoElecTakers
+INFO:root:4 6
+INFO:root:1 35
+INFO:root:3 6
+INFO:root:--------attempting non-cyclic concerted two bonds breakings and two bond formations---------
+INFO:root:newSmiles = [CH2-][CH+][BrH+].[Br-]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH2-]C=[Br+].Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH2-]C(Br)[BrH+]
+INFO:root:new molecule found!
+INFO:root:energy base line is 0.0
+INFO:root:not screening energy, adding it directly
+INFO:root:newSmiles = [CH-]=[CH+].[Br-].[BrH2+]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH-]=C[BrH+].Br
+INFO:root:new molecule found!
+INFO:root:energy base line is 0.0
+INFO:root:not screening energy, adding it directly
+INFO:root:newSmiles = [CH-]=[C+][BrH+].[Br-].[H][H]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH-]=[CH+].[Br-].[BrH2+]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH-]=C[BrH+].Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH-]=[C+][BrH+].[Br-].[H][H]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:--------attempting non-cyclic concerted two bonds breakings and two bond formations---------
+INFO:root:newSmiles = C=[CH+].[Br-].Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC=C.Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C#C.Br.Br
+INFO:root:new molecule found!
+INFO:root:energy base line is 0.0
+INFO:root:not screening energy, adding it directly
+INFO:root:newSmiles = C#C.Br.Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C=[CH+].[Br-].Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C=[CH+].[Br-].Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC=C.Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC[CH2+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C[CH+]Br.[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = Br[C+]=C.[Br-].[H][H]
+INFO:root:new molecule found!
+INFO:root:energy base line is 0.0
+INFO:root:not screening energy, adding it directly
+INFO:root:newSmiles = BrC=[CH+].[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC=[CH+].[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:--------attempting non-cyclic concerted two bonds breakings and two bond formations---------
+INFO:root:newSmiles = [CH-]([CH2+])[BrH+].[Br-]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH-](CBr)[BrH+]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = Br[BrH+].[CH-]=C
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH-]=[CH+].[Br-].[BrH2+]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH-]=[CH+].[Br-].[BrH2+]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [C-](=C)[BrH+].Br
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [C-](=[CH+])[BrH+].[Br-].[H][H]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [C-](=[CH+])[BrH+].[Br-].[H][H]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:--------attempting cyclic concerted two bonds breakings and two bond formations----------
+INFO:root:newSmiles = C#C.[Br-].[BrH2+]
+INFO:root:new molecule found!
+INFO:root:energy base line is 0.0
+INFO:root:not screening energy, adding it directly
+INFO:root:newSmiles = C#C.[Br-].[BrH2+]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = CC=[Br+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C=C[BrH+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C=C[BrH+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C=C=[Br+].[Br-].[H][H]
+INFO:root:new molecule found!
+INFO:root:energy base line is 0.0
+INFO:root:not screening energy, adding it directly
+INFO:root:newSmiles = [Br+]1C=C1.[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [Br+]1C=C1.[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:--------attempting cyclic concerted two bonds breakings and two bond formations----------
+INFO:root:--------attempting cyclic concerted two bonds breakings and two bond formations----------
+INFO:root:newSmiles = CC=[Br+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C#C.[Br-].[BrH2+]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C#C.[Br-].[BrH2+]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C=C=[Br+].[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C#C[BrH+].[Br-].[H][H]
+INFO:root:new molecule found!
+INFO:root:energy base line is 0.0
+INFO:root:not screening energy, adding it directly
+INFO:root:newSmiles = C#C[BrH+].[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:--------attempting cyclic concerted two bonds breakings and two bond formations----------
+INFO:root:newSmiles = CC=[Br+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C#C.[Br-].[BrH2+]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C=C[BrH+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [Br+]1C=C1.[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C#C[BrH+].[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C#C.[Br-].[BrH2+]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C=C[BrH+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [Br+]1C=C1.[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C#C[BrH+].[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:--------attempting cyclic concerted two bonds breakings and two bond formations----------
+INFO:root:newSmiles = CC=[Br+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C=C=[Br+].[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [Br+]1C=C1.[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [Br+]1C=C1.[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C=C[BrH+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C=C[BrH+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:--------attempting cyclic concerted two bonds breakings and two bond formations----------
+INFO:root:newSmiles = C=C=[Br+].[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C#C[BrH+].[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C#C[BrH+].[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:--------attempting cyclic concerted two bonds breakings and two bond formations----------
+INFO:root:newSmiles = [Br+]1C=C1.[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C#C[BrH+].[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C#C.[Br-].[BrH2+]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C=C[BrH+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:--------attempting cyclic concerted two bonds breakings and two bond formations----------
+INFO:root:newSmiles = [Br+]1C=C1.[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C#C[BrH+].[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C#C.[Br-].[BrH2+]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C=C[BrH+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:***************************************************
+INFO:root:             processing a new molecule
+INFO:root:atoms in zeroElecGivers
+INFO:root:3 6
+INFO:root:atoms in twoElecGivers
+INFO:root:1 35
+INFO:root:2 35
+INFO:root:atoms in zeroElecTakers
+INFO:root:4 6
+INFO:root:atoms in twoElecTakers
+INFO:root:4 6
+INFO:root:1 35
+INFO:root:newSmiles = C=C[BrH+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC=C.Br
+INFO:root:This molecule has been processed
+INFO:root:--------attempting non-cyclic concerted two bonds breakings and two bond formations---------
+INFO:root:newSmiles = [CH2-][CH+][BrH+].[Br-]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH2-][CH+]Br.Br
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH-]=[CH+].[Br-].[BrH2+]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH-]=[CH+].Br.Br
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH-]=[CH+].[Br-].[BrH2+]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH-]=[CH+].Br.Br
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:--------attempting non-cyclic concerted two bonds breakings and two bond formations---------
+INFO:root:newSmiles = C=[CH+].[Br-].Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH2+][CH2+].[Br-].[Br-]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH+]=[CH+].[Br-].[Br-].[H][H]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH+]=[CH+].[Br-].[Br-].[H][H]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:--------attempting cyclic concerted two bonds breakings and two bond formations----------
+INFO:root:newSmiles = BrC[CH2+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C=[CH+].[Br-].Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C[CH+]Br.[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C=[CH+].[Br-].Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C=[CH+].[Br-].Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = Br[C+]=C.[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC=[CH+].[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC=[CH+].[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:--------attempting cyclic concerted two bonds breakings and two bond formations----------
+INFO:root:--------attempting cyclic concerted two bonds breakings and two bond formations----------
+INFO:root:newSmiles = BrC[CH2+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C[CH+]Br.[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C=[CH+].[Br-].Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = Br[C+]=C.[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C#[C+].[Br-].Br.[H][H]
+INFO:root:new molecule found!
+INFO:root:energy base line is 0.0
+INFO:root:not screening energy, adding it directly
+INFO:root:newSmiles = C#[C+].[Br-].Br.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:--------attempting cyclic concerted two bonds breakings and two bond formations----------
+INFO:root:newSmiles = C[CH+]Br.[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC[CH2+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C=[CH+].[Br-].Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC=[CH+].[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C#[C+].[Br-].Br.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C=[CH+].[Br-].Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC=[CH+].[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C#[C+].[Br-].Br.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:--------attempting cyclic concerted two bonds breakings and two bond formations----------
+INFO:root:newSmiles = C[CH+]Br.[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = Br[C+]=C.[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC[CH2+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC=[CH+].[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC=[CH+].[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C=[CH+].[Br-].Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C=[CH+].[Br-].Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C=[CH+].[Br-].Br
+INFO:root:This molecule has been processed
+INFO:root:--------attempting cyclic concerted two bonds breakings and two bond formations----------
+INFO:root:newSmiles = Br[C+]=C.[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C#[C+].[Br-].Br.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C#[C+].[Br-].Br.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C=[CH+].[Br-].Br
+INFO:root:This molecule has been processed
+INFO:root:--------attempting cyclic concerted two bonds breakings and two bond formations----------
+INFO:root:newSmiles = BrC=[CH+].[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C#[C+].[Br-].Br.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C=[CH+].[Br-].Br
+INFO:root:This molecule has been processed
+INFO:root:--------attempting cyclic concerted two bonds breakings and two bond formations----------
+INFO:root:newSmiles = BrC=[CH+].[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C#[C+].[Br-].Br.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C=[CH+].[Br-].Br
+INFO:root:This molecule has been processed
+INFO:root:***************************************************
+INFO:root:             processing a new molecule
+INFO:root:atoms in zeroElecGivers
+INFO:root:atoms in twoElecGivers
+INFO:root:2 35
+INFO:root:4 6
+INFO:root:atoms in zeroElecTakers
+INFO:root:3 6
+INFO:root:atoms in twoElecTakers
+INFO:root:2 35
+INFO:root:1 35
+INFO:root:3 6
+INFO:root:--------attempting non-cyclic concerted two bonds breakings and two bond formations---------
+INFO:root:newSmiles = CC=[Br+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = CC=[Br+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [Br+]1CC1.[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH2-][Br+][CH2+].[Br-]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH2-][CH+][BrH+].[Br-]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = C=C[BrH+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH2-][CH+][BrH+].[Br-]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = C=C[BrH+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:--------attempting non-cyclic concerted two bonds breakings and two bond formations---------
+INFO:root:newSmiles = BrBr.[CH2-][CH2+]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH2-]C[Br+]Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrBr.C=C
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = Br[BrH+].[CH-]=C
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = Br[BrH+].[CH-]=C
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH2-][Br+]CBr
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH2-]C(Br)[BrH+]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH2-]C(Br)[BrH+]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrCCBr
+INFO:root:target found!!!
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH-](CBr)[BrH+]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH-](CBr)[BrH+]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = Br[CH2+].[CH2-]Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH2-][Br+]CBr
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH2-][CH+]Br.Br
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH2-]C(Br)[BrH+]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC=C.Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH2-][CH+]Br.Br
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH2-]C(Br)[BrH+]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC=C.Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH-](CBr)[BrH+]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH-](CBr)[BrH+]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:--------attempting non-cyclic concerted two bonds breakings and two bond formations---------
+INFO:root:newSmiles = [Br+]=[Br+].[CH2-][CH2-]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH2-]C[Br+]Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH2-][Br+]CBr
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH2-][Br+][Br+][CH2-]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH2-][Br+]CBr
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH2-][CH-][Br+][BrH+]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH-](C)[Br+]Br
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH2-][CH-][Br+][BrH+]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH-](C)[Br+]Br
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:--------attempting cyclic concerted two bonds breakings and two bond formations----------
+INFO:root:newSmiles = Br[BrH+].[CH-]=C
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = Br[BrH+].[CH-]=C
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH-](Br)C[BrH+]
+INFO:root:new molecule found!
+INFO:root:energy base line is 0.0
+INFO:root:not screening energy, adding it directly
+INFO:root:newSmiles = [CH-](Br)C[BrH+]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH2-]Br.C=[Br+]
+INFO:root:new molecule found!
+INFO:root:energy base line is 0.0
+INFO:root:not screening energy, adding it directly
+INFO:root:newSmiles = [CH2-]C=[Br+].Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH2-]C=[Br+].Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH-]1C[Br+]1.Br
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH-]1C[Br+]1.Br
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:--------attempting cyclic concerted two bonds breakings and two bond formations----------
+INFO:root:newSmiles = [CH2-]Br.C=[Br+]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH2-]C=[Br+].Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH2-]C=[Br+].Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH-]1C[Br+]1.Br
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH-]1C[Br+]1.Br
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH-](Br)C[BrH+]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH-](Br)C[BrH+]
+INFO:root:This molecule has been processed
+INFO:root:--------attempting cyclic concerted two bonds breakings and two bond formations----------
+INFO:root:newSmiles = Br[BrH+].[CH-]=C
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = Br[BrH+].[CH-]=C
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH2-]Br.C=[Br+]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH2-]C=[Br+].Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH-]=C[Br+]Br.[H][H]
+INFO:root:new molecule found!
+INFO:root:energy base line is 0.0
+INFO:root:not screening energy, adding it directly
+INFO:root:newSmiles = [CH-]=C[Br+]Br.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH2-]C=[Br+].Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH-]=C[Br+]Br.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH-]=C[Br+]Br.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:--------attempting cyclic concerted two bonds breakings and two bond formations----------
+INFO:root:newSmiles = [CH2-]Br.C=[Br+]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = Br[BrH+].[CH-]=C
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH-](Br)C[BrH+]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH-]1C[Br+]1.Br
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH-]=C[Br+]Br.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH-]=C[Br+]Br.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH-](Br)C[BrH+]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = Br[BrH+].[CH-]=C
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH-]1C[Br+]1.Br
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH-]=C[Br+]Br.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH-]=C[Br+]Br.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:--------attempting cyclic concerted two bonds breakings and two bond formations----------
+INFO:root:newSmiles = [CH2-]C=[Br+].Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH-]=C[Br+]Br.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH-]=C[Br+]Br.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:--------attempting cyclic concerted two bonds breakings and two bond formations----------
+INFO:root:newSmiles = [CH2-]C=[Br+].Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH-]=C[Br+]Br.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH-]=C[Br+]Br.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:--------attempting cyclic concerted two bonds breakings and two bond formations----------
+INFO:root:newSmiles = [CH-]1C[Br+]1.Br
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH-](Br)C[BrH+]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH-]=C[Br+]Br.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH-]=C[Br+]Br.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = Br[BrH+].[CH-]=C
+INFO:root:This molecule has been processed
+INFO:root:--------attempting cyclic concerted two bonds breakings and two bond formations----------
+INFO:root:newSmiles = [CH-]1C[Br+]1.Br
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH-](Br)C[BrH+]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH-]=C[Br+]Br.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH-]=C[Br+]Br.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = Br[BrH+].[CH-]=C
+INFO:root:This molecule has been processed
+INFO:root:***************************************************
+INFO:root:             processing a new molecule
+INFO:root:atoms in zeroElecGivers
+INFO:root:atoms in twoElecGivers
+INFO:root:2 35
+INFO:root:4 6
+INFO:root:atoms in zeroElecTakers
+INFO:root:3 6
+INFO:root:atoms in twoElecTakers
+INFO:root:1 35
+INFO:root:2 35
+INFO:root:3 6
+INFO:root:--------attempting non-cyclic concerted two bonds breakings and two bond formations---------
+INFO:root:newSmiles = [CH-]1C[Br+]1.Br
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH-]=C[BrH+].Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH-]=C[BrH+].Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC=C.Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH-](Br)[CH2+].Br
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH-]1C[Br+]1.Br
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [C-](=C)[BrH+].Br
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH-]=[CH+].Br.Br
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH-]=C[BrH+].Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C#C.Br.Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH-]=[CH+].Br.Br
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH-]=C[BrH+].Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C#C.Br.Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [C-](=C)[BrH+].Br
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = Br[BrH+].[CH-]=C
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrBr.C=C
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrBr.[CH2-][CH2+]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = BrBr.[CH-]=[CH+].[H][H]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = BrBr.C#C.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrBr.[CH-]=[CH+].[H][H]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = BrBr.C#C.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:--------attempting non-cyclic concerted two bonds breakings and two bond formations---------
+INFO:root:newSmiles = C=C[BrH+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH-]([CH2+])[BrH+].[Br-]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH-]=[CH+].[Br-].[BrH2+]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = C#C.[Br-].[BrH2+]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH-]=[CH+].[Br-].[BrH2+]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = C#C.[Br-].[BrH2+]
+INFO:root:This molecule has been processed
+INFO:root:--------attempting non-cyclic concerted two bonds breakings and two bond formations---------
+INFO:root:newSmiles = [CH2-]C[Br+]Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH2-]C(Br)[BrH+]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH2-][CH-][Br+][BrH+]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH2-]C(Br)[BrH+]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [Br+]=[Br+].[CH2-][CH2-]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH2-]C[Br+]Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH-]=[CH-].[BrH+][BrH+]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = Br[BrH+].[CH-]=C
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [Br+]=[Br+].[CH-]=[CH-].[H][H]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH-]=[CH-].[BrH+][BrH+]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = Br[BrH+].[CH-]=C
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [Br+]=[Br+].[CH-]=[CH-].[H][H]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:--------attempting cyclic concerted two bonds breakings and two bond formations----------
+INFO:root:newSmiles = [CH-](CBr)[BrH+]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH-]=CBr.[BrH2+]
+INFO:root:new molecule found!
+INFO:root:energy base line is 0.0
+INFO:root:not screening energy, adding it directly
+INFO:root:newSmiles = [CH-]=CBr.[BrH2+]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH-](Br)C[BrH+]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [C-](=C)Br.[BrH2+]
+INFO:root:new molecule found!
+INFO:root:energy base line is 0.0
+INFO:root:not screening energy, adding it directly
+INFO:root:newSmiles = [CH-]=C[BrH+].Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH-]=C[BrH+].Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [C-](=C)[BrH+].Br
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH-](C)[Br+]Br
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = Br[BrH+].[CH-]=C
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = Br[BrH+].[CH-]=C
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH2-]C[Br+]Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = Br[BrH+].[CH-]=C
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH-]=C[Br+]Br.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH-]=C[Br+]Br.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [C-](=C)[Br+]Br.[H][H]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:--------attempting cyclic concerted two bonds breakings and two bond formations----------
+INFO:root:newSmiles = [CH-](Br)C[BrH+]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH-]=C[BrH+].Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH-]=C[BrH+].Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH-](CBr)[BrH+]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [C-](=C)[BrH+].Br
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH-]=CBr.[BrH2+]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH-]=CBr.[BrH2+]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [C-](=C)Br.[BrH2+]
+INFO:root:This molecule has been processed
+INFO:root:--------attempting cyclic concerted two bonds breakings and two bond formations----------
+INFO:root:newSmiles = [CH-](C)[Br+]Br
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH-](CBr)[BrH+]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH-](Br)C[BrH+]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH2-]C[Br+]Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH-]=CBr.[BrH2+]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = Br[BrH+].[CH-]=C
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH-]=C[BrH+].Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH-]=C[Br+]Br.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [C-]#C.Br[BrH+].[H][H]
+INFO:root:new molecule found!
+INFO:root:energy base line is 0.0
+INFO:root:not screening energy, adding it directly
+INFO:root:newSmiles = [CH-]=CBr.[BrH2+]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = Br[BrH+].[CH-]=C
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH-]=C[BrH+].Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH-]=C[Br+]Br.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [C-]#C.Br[BrH+].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:--------attempting cyclic concerted two bonds breakings and two bond formations----------
+INFO:root:newSmiles = [CH-](Br)C[BrH+]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH2-]C[Br+]Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH-](CBr)[BrH+]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH-](C)[Br+]Br
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [C-](=C)Br.[BrH2+]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = Br[BrH+].[CH-]=C
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [C-](=C)[BrH+].Br
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [C-]#C.Br[BrH+].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [C-]#C.Br[BrH+].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [C-](=C)[Br+]Br.[H][H]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:--------attempting cyclic concerted two bonds breakings and two bond formations----------
+INFO:root:newSmiles = [CH-]=C[BrH+].Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH-]=C[Br+]Br.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH-]=CBr.[BrH2+]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [C-]#C.Br[BrH+].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = Br[BrH+].[CH-]=C
+INFO:root:This molecule has been processed
+INFO:root:--------attempting cyclic concerted two bonds breakings and two bond formations----------
+INFO:root:newSmiles = [CH-]=C[BrH+].Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH-]=C[Br+]Br.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH-]=CBr.[BrH2+]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [C-]#C.Br[BrH+].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = Br[BrH+].[CH-]=C
+INFO:root:This molecule has been processed
+INFO:root:--------attempting cyclic concerted two bonds breakings and two bond formations----------
+INFO:root:newSmiles = [CH2-]C[Br+]Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH-]=C[Br+]Br.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH-]=C[Br+]Br.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH-](C)[Br+]Br
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [C-](=C)[Br+]Br.[H][H]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = Br[BrH+].[CH-]=C
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = Br[BrH+].[CH-]=C
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = Br[BrH+].[CH-]=C
+INFO:root:This molecule has been processed
+INFO:root:--------attempting cyclic concerted two bonds breakings and two bond formations----------
+INFO:root:newSmiles = [C-](=C)[BrH+].Br
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [C-](=C)[Br+]Br.[H][H]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [C-](=C)Br.[BrH2+]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [C-]#C.Br[BrH+].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [C-]#C.Br[BrH+].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = Br[BrH+].[CH-]=C
+INFO:root:This molecule has been processed
+INFO:root:***************************************************
+INFO:root:             processing a new molecule
+INFO:root:***************************************************
+INFO:root:             processing a new molecule
+INFO:root:atoms in zeroElecGivers
+INFO:root:atoms in twoElecGivers
+INFO:root:1 35
+INFO:root:2 35
+INFO:root:atoms in zeroElecTakers
+INFO:root:4 6
+INFO:root:3 6
+INFO:root:atoms in twoElecTakers
+INFO:root:1 35
+INFO:root:4 6
+INFO:root:2 35
+INFO:root:3 6
+INFO:root:--------attempting non-cyclic concerted two bonds breakings and two bond formations---------
+INFO:root:newSmiles = C=C[BrH+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C=[CH+].[Br-].Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC[CH2+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C[CH+]Br.[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = CC=[Br+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = Br[C+]=C.[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C=C=[Br+].[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC=[CH+].[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC=[CH+].[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:--------attempting non-cyclic concerted two bonds breakings and two bond formations---------
+INFO:root:newSmiles = [CH2-][CH+]Br.Br
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH2-]C(Br)[BrH+]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH2-]C=[Br+].Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH-]=CBr.[BrH2+]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH-]=C[BrH+].Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH-]=[CH+].Br.Br
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH-]=[C+]Br.Br.[H][H]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH-]=C=[Br+].Br.[H][H]
+INFO:root:new molecule found!
+INFO:root:energy base line is 0.0
+INFO:root:not screening energy, adding it directly
+INFO:root:newSmiles = [CH-]=CBr.[BrH2+]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH-]=C[BrH+].Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH-]=[CH+].Br.Br
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH-]=[C+]Br.Br.[H][H]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH-]=C=[Br+].Br.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:--------attempting non-cyclic concerted two bonds breakings and two bond formations---------
+INFO:root:newSmiles = C=[CH+].[Br-].Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C=C[BrH+].[Br-]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C#C.[Br-].[BrH2+]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C#C.[Br-].[BrH2+]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C=[CH+].[Br-].Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C=[CH+].[Br-].Br
+INFO:root:This molecule has been processed
+INFO:root:--------attempting non-cyclic concerted two bonds breakings and two bond formations---------
+INFO:root:newSmiles = [CH-](Br)[CH2+].Br
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH-](Br)C[BrH+]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH-]1C[Br+]1.Br
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [C-](=C)Br.[BrH2+]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [C-](=C)[BrH+].Br
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [C-](=[CH+])Br.Br.[H][H]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [C-](=[CH+])Br.Br.[H][H]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = Br[BrH+].[CH-]=C
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = Br[BrH+].[CH-]=C
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH-]=C[BrH+].Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH-]=C[BrH+].Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = Br[BrH+].[CH-]=C
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH-]=[CH+].Br.Br
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH-]=C[BrH+].Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH-]=[CH+].Br.Br
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH-]=C[BrH+].Br
+INFO:root:This molecule has been processed
+INFO:root:--------attempting cyclic concerted two bonds breakings and two bond formations----------
+INFO:root:newSmiles = BrC=C.Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrCCBr
+INFO:root:target found!!!
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC=C.Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrBr.C=C
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = CC(Br)Br
+INFO:root:new molecule found!
+INFO:root:energy base line is 0.0
+INFO:root:not screening energy, adding it directly
+INFO:root:newSmiles = BrC=C.Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC=C.Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC(=C)Br.[H][H]
+INFO:root:new molecule found!
+INFO:root:energy base line is 0.0
+INFO:root:not screening energy, adding it directly
+INFO:root:newSmiles = BrC=CBr.[H][H]
+INFO:root:new molecule found!
+INFO:root:energy base line is 0.0
+INFO:root:not screening energy, adding it directly
+INFO:root:newSmiles = BrC=CBr.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:--------attempting cyclic concerted two bonds breakings and two bond formations----------
+INFO:root:newSmiles = BrC=C.Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C#C.Br.Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C#C.Br.Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrBr.C=C
+INFO:root:This molecule has been processed
+INFO:root:--------attempting cyclic concerted two bonds breakings and two bond formations----------
+INFO:root:newSmiles = BrCCBr
+INFO:root:target found!!!
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = CC(Br)Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC=C.Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC(=C)Br.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC#C.Br.[H][H]
+INFO:root:new molecule found!
+INFO:root:energy base line is 0.0
+INFO:root:not screening energy, adding it directly
+INFO:root:newSmiles = BrC#C.Br.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrBr.C=C
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC=C.Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C#C.Br.Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C#C.Br.Br
+INFO:root:This molecule has been processed
+INFO:root:--------attempting cyclic concerted two bonds breakings and two bond formations----------
+INFO:root:newSmiles = CC(Br)Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrCCBr
+INFO:root:target found!!!
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC=C.Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C#C.Br.Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC=CBr.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC#C.Br.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC=C.Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C#C.Br.Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC=CBr.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC#C.Br.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:--------attempting cyclic concerted two bonds breakings and two bond formations----------
+INFO:root:newSmiles = BrBr.C=C
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = CC(Br)Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC(=C)Br.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC=C.Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrCCBr
+INFO:root:target found!!!
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC=CBr.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC=CBr.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC=C.Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC=C.Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC=C.Br
+INFO:root:This molecule has been processed
+INFO:root:--------attempting cyclic concerted two bonds breakings and two bond formations----------
+INFO:root:newSmiles = BrC(=C)Br.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC#C.Br.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC#C.Br.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC=C.Br
+INFO:root:This molecule has been processed
+INFO:root:--------attempting cyclic concerted two bonds breakings and two bond formations----------
+INFO:root:newSmiles = BrC=CBr.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC#C.Br.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C#C.Br.Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC=C.Br
+INFO:root:This molecule has been processed
+INFO:root:--------attempting cyclic concerted two bonds breakings and two bond formations----------
+INFO:root:newSmiles = BrC=CBr.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC#C.Br.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C#C.Br.Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC=C.Br
+INFO:root:This molecule has been processed
+INFO:root:***************************************************
+INFO:root:             processing a new molecule
+INFO:root:atoms in zeroElecGivers
+INFO:root:atoms in twoElecGivers
+INFO:root:1 35
+INFO:root:2 35
+INFO:root:atoms in zeroElecTakers
+INFO:root:4 6
+INFO:root:3 6
+INFO:root:atoms in twoElecTakers
+INFO:root:1 35
+INFO:root:4 6
+INFO:root:2 35
+INFO:root:3 6
+INFO:root:--------attempting non-cyclic concerted two bonds breakings and two bond formations---------
+INFO:root:newSmiles = BrC=[CH+].[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [Br+]1C=C1.[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C#C[BrH+].[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC=[CH+].[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [Br+]1C=C1.[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C#C[BrH+].[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C#C.[Br-].[BrH2+]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C#[C+].[Br-].Br.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C#C[BrH+].[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C#C.[Br-].[BrH2+]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C#[C+].[Br-].Br.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C#C[BrH+].[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:--------attempting non-cyclic concerted two bonds breakings and two bond formations---------
+INFO:root:newSmiles = BrBr.[CH-]=[CH+].[H][H]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH-]=C[Br+]Br.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH-]=C[Br+]Br.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [C-]#C.Br[BrH+].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [C-]#C.Br[BrH+].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [C-]#[C+].BrBr.[H][H].[H][H]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:--------attempting non-cyclic concerted two bonds breakings and two bond formations---------
+INFO:root:newSmiles = BrC=[CH+].[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [Br+]1C=C1.[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C#C[BrH+].[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC=[CH+].[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [Br+]1C=C1.[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C#C[BrH+].[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C#C.[Br-].[BrH2+]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C#[C+].[Br-].Br.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C#C[BrH+].[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C#C.[Br-].[BrH2+]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C#[C+].[Br-].Br.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C#C[BrH+].[Br-].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:--------attempting non-cyclic concerted two bonds breakings and two bond formations---------
+INFO:root:newSmiles = BrBr.[CH-]=[CH+].[H][H]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:newSmiles = [CH-]=C[Br+]Br.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [CH-]=C[Br+]Br.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [C-]#C.Br[BrH+].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [C-]#C.Br[BrH+].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = [C-]#[C+].BrBr.[H][H].[H][H]
+INFO:root:This molecule is invalid according to isInvalidStructure, not adding it
+INFO:root:--------attempting cyclic concerted two bonds breakings and two bond formations----------
+INFO:root:newSmiles = BrC=CBr.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC#C.Br.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC=CBr.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC#C.Br.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C#C.Br.Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC#C.Br.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C#C.Br.Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC#C.Br.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:--------attempting cyclic concerted two bonds breakings and two bond formations----------
+INFO:root:newSmiles = BrC=CBr.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC#C.Br.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC=CBr.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC#C.Br.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C#C.Br.Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC#C.Br.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C#C.Br.Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC#C.Br.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:--------attempting cyclic concerted two bonds breakings and two bond formations----------
+INFO:root:newSmiles = BrC=CBr.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC=CBr.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrBr.C=C
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrBr.C=C
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC#C.Br.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC#C.Br.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrBr.C#C.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrBr.C#C.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C$C.BrBr.[H][H].[H][H]
+INFO:root:new molecule found!
+INFO:root:energy base line is 0.0
+INFO:root:not screening energy, adding it directly
+INFO:root:--------attempting cyclic concerted two bonds breakings and two bond formations----------
+INFO:root:newSmiles = BrC=CBr.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC=CBr.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrBr.C=C
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrBr.C=C
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC#C.Br.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC#C.Br.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrBr.C#C.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C$C.BrBr.[H][H].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrBr.C#C.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:--------attempting cyclic concerted two bonds breakings and two bond formations----------
+INFO:root:newSmiles = C#C.Br.Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C#C.Br.Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrBr.C=C
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrBr.C#C.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrBr.C=C
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrBr.C#C.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrBr.C#C.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrBr.C#C.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:--------attempting cyclic concerted two bonds breakings and two bond formations----------
+INFO:root:newSmiles = BrC#C.Br.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC#C.Br.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C$C.BrBr.[H][H].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrBr.C#C.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrBr.C#C.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:--------attempting cyclic concerted two bonds breakings and two bond formations----------
+INFO:root:newSmiles = C#C.Br.Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C#C.Br.Br
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrBr.C=C
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrBr.C#C.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrBr.C=C
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrBr.C#C.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrBr.C#C.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrBr.C#C.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:--------attempting cyclic concerted two bonds breakings and two bond formations----------
+INFO:root:newSmiles = BrC#C.Br.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrC#C.Br.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = C$C.BrBr.[H][H].[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrBr.C#C.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:newSmiles = BrBr.C#C.[H][H]
+INFO:root:This molecule has been processed
+INFO:root:=========================================================
+INFO:root:                     nStep = 3
+INFO:root:targetSmiles = BrCCBr
+INFO:root:targetLeastStep = 2
+INFO:root:===============End of the isomer search===============

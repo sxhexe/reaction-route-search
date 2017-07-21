@@ -1310,6 +1310,8 @@ namespace OpenBabel
      *  OBFF_LOGLVL_MEDIUM: see note above \n
      *  OBFF_LOGLVL_HIGH:   see note above \n
      */
+    bool SteepestDescentTakeNStepsMecp(int n, OBForceField *pFF2, OBMol *mol2);
+    void SteepestDescentMecp(int steps, double econv, int method, OBForceField *pFF2, OBMol* mol2);
     void ConjugateGradients(int steps, double econv = 1e-6f, int method = OBFF_ANALYTICAL_GRADIENT);
     /*! Initialize conjugate gradient optimalization and take the first step, to be
      *  used in combination with ConjugateGradientsTakeNSteps().

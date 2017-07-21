@@ -19,7 +19,7 @@ list(APPEND _IMPORT_CHECK_FILES_FOR_openbabel "${_IMPORT_PREFIX}/lib/libopenbabe
 # Import target "inchi" for configuration "RelWithDebInfo"
 set_property(TARGET inchi APPEND PROPERTY IMPORTED_CONFIGURATIONS RELWITHDEBINFO)
 set_target_properties(inchi PROPERTIES
-  IMPORTED_LINK_INTERFACE_LIBRARIES_RELWITHDEBINFO "/usr/lib/x86_64-linux-gnu/libm.so;dl;/usr/lib/x86_64-linux-gnu/libz.so;/usr/lib/x86_64-linux-gnu/libcairo.so;c"
+  IMPORTED_LINK_INTERFACE_LIBRARIES_RELWITHDEBINFO "/usr/lib/x86_64-linux-gnu/libm.so;dl;/usr/lib/x86_64-linux-gnu/libz.so;c"
   IMPORTED_LOCATION_RELWITHDEBINFO "${_IMPORT_PREFIX}/lib/libinchi.so.0.4.1"
   IMPORTED_SONAME_RELWITHDEBINFO "libinchi.so.0"
   )

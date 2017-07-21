@@ -1,7 +1,7 @@
 /* src/config.h.in.  Generated from configure.in by autoheader.  */
 
 /* Where the data files are located */
-#define BABEL_DATADIR "/home/reactionroutesearch/reaction-route-search/openbabel2.4.1Install/share/openbabel"
+#define BABEL_DATADIR "/home/ls/reaction-route-search/openbabel2.4.1Install/share/openbabel"
 
 /* The version of Open Babel */
 #define BABEL_VERSION "2.4.1"
@@ -184,7 +184,7 @@
  #define SCANDIR_CONST
 #endif
 
-#define OB_MODULE_PATH "/home/reactionroutesearch/reaction-route-search/openbabel2.4.1Install/lib/openbabel/2.4.1"
+#define OB_MODULE_PATH "/home/ls/reaction-route-search/openbabel2.4.1Install/lib/openbabel/2.4.1"
 
 #ifndef TIME_WITH_SYS_TIME
   #ifdef HAVE_SYS_TIME

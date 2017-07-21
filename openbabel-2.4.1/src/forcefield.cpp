@@ -2849,11 +2849,137 @@ namespace OpenBabel
     return true;  // no convergence reached
   }
 
+  bool OBForceField::SteepestDescentTakeNStepsMecp(int n, OBForceField *pFF2, OBMol *mol2)
+  {
+    if (!_validSetup)
+      return 0;
+
+    _ncoords = _mol.NumAtoms() * 3;
+    double e_n2;
+    vector3 dir;
+    double maxgrad; // for convergence
+
+    for (int i = 1; i <= n; i++) {
+      _cstep++;
+      maxgrad = 1.0e20;
+      
+      FOR_ATOMS_OF_MOL (a, _mol) {
+        unsigned int idx = a->GetIdx();
+        snprintf(_logbuf, BUFF_SIZE, "This is atom %4d\n", idx);
+        OBFFLog(_logbuf);
+        unsigned int coordIdx = (idx - 1) * 3;
+        if (_constraints.IsFixed(idx) || (_fixAtom == idx) || (_ignoreAtom == idx)) {
+          _gradientPtr[coordIdx] = 0.0;
+          _gradientPtr[coordIdx+1] = 0.0;
+          _gradientPtr[coordIdx+2] = 0.0;
+        } else {
+          if (!HasAnalyticalGradients()) {
+            // use numerical gradients
+            dir = NumericalDerivative(&*a) + _constraints.GetGradient(a->GetIdx());
+          } else {
+            // use analytical gradients
+            snprintf(_logbuf, BUFF_SIZE, "The gradients of atom %4d in mol1 is %8.5f, %8.5f, %8.5f\n", 
+                    idx, _gradientPtr[coordIdx], _gradientPtr[coordIdx+1], _gradientPtr[coordIdx+2]);
+            OBFFLog(_logbuf);
+
+            OBFFLog("setting up pFF2\n");
+            pFF2->Setup(*mol2);
+            snprintf(_logbuf, BUFF_SIZE, "The gradients of atom %4d in mol2 is %8.5f, %8.5f, %8.5f\n", 
+                    idx, pFF2->GetGradient(mol2->GetAtom(idx)).GetX(), 
+                         pFF2->GetGradient(mol2->GetAtom(idx)).GetY(),
+                         pFF2->GetGradient(mol2->GetAtom(idx)).GetZ());
+            OBFFLog(_logbuf);
+            dir = (_e_n1 - pFF2->Energy() > 0? 1: -1) * 
+                  (GetGradient(&*a) - pFF2->GetGradient(mol2->GetAtom(idx))) ;
+                  // MECP: Energy() updates gradients so calling that first, then putting together 
+                  //       the modified gradients as (e1 - e2)(g1 - g2)
+            OBFFLog("setting back pFF1\n");
+            Setup(_mol);
+          }
+
+          // check to see how large the gradients are
+          if (dir.length_2() > maxgrad)
+            maxgrad = dir.length_2();
+
+          if (!_constraints.IsXFixed(idx))
+            _gradientPtr[coordIdx] = dir.x();
+          else
+            _gradientPtr[coordIdx] = 0.0;
+
+          if (!_constraints.IsYFixed(idx))
+            _gradientPtr[coordIdx+1] = dir.y();
+          else
+            _gradientPtr[coordIdx+1] = 0.0;
+
+          if (!_constraints.IsZFixed(idx))
+            _gradientPtr[coordIdx+2] = dir.z();
+          else
+            _gradientPtr[coordIdx+2] = 0.0;
+        }
+      }
+      OBFFLog("performing a linesearch\n");
+      FOR_ATOMS_OF_MOL(a, _mol) {
+        unsigned int idx = a->GetIdx();
+        unsigned int coordIdx = (idx - 1) * 3;
+        snprintf(_logbuf, BUFF_SIZE, "The final gradients of atom %4d in mol1 is %8.5f, %8.5f, %8.5f\n", 
+                    idx, _gradientPtr[coordIdx], _gradientPtr[coordIdx+1], _gradientPtr[coordIdx+2]);
+        OBFFLog(_logbuf);
+      }
+      
+      // perform a linesearch
+      switch (_linesearch) {
+      case LineSearchType::Newton2Num:
+        Newton2NumLineSearch(_gradientPtr);
+        break;
+      default:
+      case LineSearchType::Simple:
+        LineSearch(_mol.GetCoordinates(), _gradientPtr);
+        break;
+      }
+      pFF2->SetCoordinates(_mol); // MECP: update mol2's coordinates too
+      
+      e_n2 = Energy() + _constraints.GetConstraintEnergy();
+
+      if ((_cstep % _pairfreq == 0) && _cutoff)
+        UpdatePairsSimple(); // Update the non-bonded pairs (Cut-off)
+
+      IF_OBFF_LOGLVL_LOW {
+        if (_cstep % 10 == 0) {
+          snprintf(_logbuf, BUFF_SIZE, " %4d    %8.5f    %8.5f\n", _cstep, e_n2, _e_n1);
+          OBFFLog(_logbuf);
+        }
+      }
+
+      if (IsNear(e_n2, _e_n1, _econv)
+          && (maxgrad < _gconv)) { // gradient criteria (0.1) squared
+        IF_OBFF_LOGLVL_LOW
+          OBFFLog("    STEEPEST DESCENT HAS CONVERGED\n");
+        return false;
+      }
+
+      if (_nsteps == _cstep) {
+        return false;
+      }
+
+      _e_n1 = e_n2;
+    }
+
+    return true;  // no convergence reached
+  }
+
   void OBForceField::SteepestDescent(int steps, double econv, int method)
   {
     if (steps > 0) {
       SteepestDescentInitialize(steps, econv, method);
       SteepestDescentTakeNSteps(steps);
+    }
+  }
+  
+  void OBForceField::SteepestDescentMecp(int steps, double econv, int method, OBForceField *pFF2, OBMol* mol2)
+  {
+    if (steps > 0) {
+      SteepestDescentInitialize(steps, econv, method);
+      SteepestDescentTakeNStepsMecp(steps, pFF2, mol2);
     }
   }
 

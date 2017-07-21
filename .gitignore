@@ -1,6 +1,7 @@
 # reactionroute-specific
 *.svg
 *.gv
+openbabel2.4.1Build/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
