@@ -108,3 +108,16 @@ def SeamTsSearch(mol1, mol2, forcefield):
         mol1 = updateCoords(mol1, c)
         mol2 = updateCoords(mol2, c)
     return c
+
+def main():
+    import pybel
+    import openbabel as ob
+    h2o_ts_string = '\n OpenBabel07171718443D\n\n  3  2  0  0  0  0  0  0  0  0999 V2000\n    0.5111    1.1929    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n    2.0943    1.2466   -0.0910 H   0  0  0  0  0  0  0  0  0  0  0  0\n    0.1878    0.5054    0.6031 H   0  0  0  0  0  0  0  0  0  0  0  0\n  1  2  1  0  0  0  0\n  1  3  1  0  0  0  0\nM  END\n'
+    h2o_ts = pybel.readstring('mol',h2o_ts_string)
+    h2o_ts_b = pybel.readstring('sdf', h2o_ts.write('sdf'))
+    h2o_ts_b.OBMol.DeleteBond(h2o_ts_b.OBMol.GetBond(1,2))
+    print SeamTsSearch(h2o_ts, h2o_ts_b, 'ghemical')
+
+if __name__ == "__main__":
+    main()
+
