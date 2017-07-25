@@ -27,7 +27,7 @@ def getCoordinates(mol):
             cList.append(float(num))
     return np.array(cList)
 
-def SeamTsSearch(mol1, mol2, forcefield):
+def SeamTsSearch(mol1, mol2, forcefield='uff'):
 
     def getFAndG(molA, molB):
         print "in getFAndG"
@@ -107,16 +107,30 @@ def SeamTsSearch(mol1, mol2, forcefield):
         conjugateDirection = conjugateDirectionNew
         mol1 = updateCoords(mol1, c)
         mol2 = updateCoords(mol2, c)
-    return c
+    return mol1
 
 def main():
     import pybel
     import openbabel as ob
+    import sys
     h2o_ts_string = '\n OpenBabel07171718443D\n\n  3  2  0  0  0  0  0  0  0  0999 V2000\n    0.5111    1.1929    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n    2.0943    1.2466   -0.0910 H   0  0  0  0  0  0  0  0  0  0  0  0\n    0.1878    0.5054    0.6031 H   0  0  0  0  0  0  0  0  0  0  0  0\n  1  2  1  0  0  0  0\n  1  3  1  0  0  0  0\nM  END\n'
     h2o_ts = pybel.readstring('mol',h2o_ts_string)
     h2o_ts_b = pybel.readstring('sdf', h2o_ts.write('sdf'))
     h2o_ts_b.OBMol.DeleteBond(h2o_ts_b.OBMol.GetBond(1,2))
-    print SeamTsSearch(h2o_ts, h2o_ts_b, 'ghemical')
+    h2o_qst3 = SeamTsSearch(h2o_ts, h2o_ts_b, sys.argv[1])
+    f = open('h2o_ts.com', 'w')
+    f.write(h2o_ts.write('gjf'))
+    f.close()
+    f_b = open("h2o_ts_b.com", 'w')
+    f_b.write(h2o_ts_b.write('gjf'))
+    f_b.close()
+    f_qst3 = open('h2o_qst3.com', 'w')
+    h2o_qst3.OBMol.SetTitle('seam_ts_search generated')
+    f_qst3.write(h2o_qst3.write('gjf'))
+    f_qst3.close()
+
+
+    
 
 if __name__ == "__main__":
     main()

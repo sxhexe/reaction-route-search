@@ -2,11 +2,13 @@
 *.svg
 *.gv
 openbabel2.4.1Build/
+openbabel2.4.1Install/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
+*.dylib*
 
 # .so file
 *.so

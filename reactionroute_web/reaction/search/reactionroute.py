@@ -72,7 +72,7 @@ class ReactionGraphNode:
         else:
             logging.warning("a molecule is needed to create a ReactionGraphNode")
             sys.exit()
-        self.neighbors = set()
+        self.neighbors = {}
         self.depths = []
         self.energy = 0.0
         if depth is not None:
@@ -116,6 +116,8 @@ class ReactionRoute:
         self.targetFound = False
         self.reactionMap = {}
         self.fragmentEnergyMap = {}
+        self._brokenBonds = []
+        self._createdBonds = []
 
     def canBreakOrFormBond(self, atom, breakOrForm, nElec):
         formalCharge = atom.GetFormalCharge()
@@ -139,6 +141,7 @@ class ReactionRoute:
         bond = atom1.GetBond(atom2)
         mol.BeginModify()
         if bond == None:
+            bondOrder = 0
             bond = mol.NewBond()
             bond.SetBegin(atom1)
             bond.SetEnd(atom2)
@@ -146,6 +149,7 @@ class ReactionRoute:
             atom1.AddBond(bond)
             atom2.AddBond(bond)
         else:
+            bondOrder = bond.GetBondOrder()
             bond.SetBondOrder(bond.GetBondOrder()+1)
         if elecFromAtom1 == 0 and elecFromAtom2 == 2:
             atom1.SetFormalCharge(atom1.GetFormalCharge()-1)
@@ -154,6 +158,12 @@ class ReactionRoute:
             atom1.SetFormalCharge(atom1.GetFormalCharge()+1)
             atom2.SetFormalCharge(atom2.GetFormalCharge()-1)
         mol.EndModify()
+        if (atom1.GetIdx(), atom2.GetIdx(), bondOrder+1) not in self._brokenBonds:
+            self._createdBonds.append((atom1.GetIdx(), atom2.GetIdx(), bondOrder))
+            logging.debug("adding ({}, {}, {}) to createdBonds".format(atom1.GetIdx(), atom2.GetIdx(), bondOrder))
+        else:
+            self._brokenBonds.remove((atom1.GetIdx(), atom2.GetIdx(), bondOrder+1))
+            logging.debug("removing ({}, {}, {}) from brokenBonds".format(atom1.GetIdx(), atom2.GetIdx(), bondOrder+1))
         logging.debug("new bond {} - {} is formed".format(atom1.GetIdx(), atom2.GetIdx()))
         return bond
 
@@ -161,6 +171,7 @@ class ReactionRoute:
         bond = atom1.GetBond(atom2)
         if bond != None:
             mol.BeginModify()
+            bondOrder = bond.GetBondOrder()
             if bond.GetBondOrder() == 1:
                 mol.DeleteBond(bond)
             elif bond.GetBondOrder() >= 2:
@@ -173,10 +184,15 @@ class ReactionRoute:
                 atom2.SetFormalCharge(atom2.GetFormalCharge()+1)
             mol.EndModify()
             logging.debug("bond {} - {} is broken".format(atom1.GetIdx(), atom2.GetIdx()))
+            if (atom1.GetIdx(), atom2.GetIdx(), bondOrder-1) not in self._createdBonds:
+                logging.debug("adding ({}, {}, {}) to brokenBonds".format(atom1.GetIdx(), atom2.GetIdx(), bondOrder))
+                self._brokenBonds.append((atom1.GetIdx(), atom2.GetIdx(), bondOrder))
+            else:
+                logging.debug("removing ({}, {}, {}) from createdBonds".format(atom1.GetIdx(), atom2.GetIdx(), bondOrder-1))
+                self._createdBonds.remove((atom1.GetIdx(), atom2.GetIdx(), bondOrder-1))
             return True
         else:
-            if self._outputLevel >= 2:
-                logging.warning("No bond is found between atom {} and atom {}".format(atom1.GetIdx(), atom2.GetIdx()))
+            logging.warning("No bond is found between atom {} and atom {}".format(atom1.GetIdx(), atom2.GetIdx()))
             return False
 
     def isInvalidStructure(self, mol):
@@ -370,7 +386,7 @@ class ReactionRoute:
                                 newNode = ReactionGraphNode(mol=newMol, depth=nStep)
                                 newNode.energy = energy
                                 self.reactionMap[newMolSmiles] = newNode
-                                currNode.neighbors.add(newNode)
+                                currNode.neighbors[newNode] = (list(self._brokenBonds), list(self._createdBonds))
                                 q.append(newNode)
                             else:
                                 logging.info("energy too high, discarded")
@@ -379,14 +395,14 @@ class ReactionRoute:
                             newNode = ReactionGraphNode(mol=newMol, depth=nStep)
                             newNode.energy = energy
                             self.reactionMap[newMolSmiles] = newNode
-                            currNode.neighbors.add(newNode)
+                            currNode.neighbors[newNode] = (list(self._brokenBonds), list(self._createdBonds))
                             q.append(newNode)
                     else:
                         logging.info("This molecule has been processed")
                         if currNode != self.reactionMap[newMolSmiles]:
                             logging.debug("Although this molecule has been added to reactionMap, it reveals a new route. Adding only the edge...")
                             self.reactionMap[newMolSmiles].depths.append(nStep)
-                            currNode.neighbors.add(self.reactionMap[newMolSmiles])
+                            currNode.neighbors[self.reactionMap[newMolSmiles]] = (list(self._brokenBonds), list(self._createdBonds))
                     logging.debug("finish adding this molecule, no matter added or not")
 
                 # Now consider all possible elementary reaction rule.
@@ -589,18 +605,18 @@ class ReactionRoute:
     def printTextReactionMap(self, head):
         from collections import deque
         q = deque()
-        q.append(head)
+        q.append((head,[0,0,0],[0,0,0]))
         visited = set()
         while len(q) > 0:
             qSize = len(q)
             print("\n------------------------")
             for nLevel in range(qSize):
-                currNode = q.popleft()
-                print(currNode.smiles),
+                currNode, brokenBonds, createdBonds = q.popleft()
+                print(currNode.smiles, 'b ', [brokenBond for brokenBond in brokenBonds], [createdBond for createdBond in createdBonds]),
                 if currNode.smiles not in visited:
                     visited.add(currNode.smiles)
                     for tmpMol in currNode.neighbors:
-                        q.append(tmpMol)
+                        q.append((tmpMol, currNode.neighbors[tmpMol][0], currNode.neighbors[tmpMol][1]))
         print
 
     def printGraphicReactionMap(self, head):
@@ -668,7 +684,7 @@ class ReactionRoute:
 
 
 if __name__ == "__main__":
-    logging.basicConfig(filename = "result", level=logging.INFO)
+    logging.basicConfig(filename = "result", level=logging.DEBUG)
     rr = ReactionRoute(reactantString=sys.argv[1], productString=sys.argv[2])
     head, target= rr.isomerSearch()
     rr.printTextReactionMap(head)
