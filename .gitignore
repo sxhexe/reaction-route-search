@@ -4,7 +4,8 @@
 openbabel2.4.1Build/
 openbabel2.4.1Install/
 reactionroute_web/static/
-reactionroute_web/search/gaussian/
+reactionroute_web/reaction/search/gaussian/
+*result
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
