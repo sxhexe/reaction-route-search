@@ -3,6 +3,8 @@
 *.gv
 openbabel2.4.1Build/
 openbabel2.4.1Install/
+reactionroute_web/static/
+reactionroute_web/search/gaussian/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

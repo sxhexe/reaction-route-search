@@ -23,9 +23,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '7$!a0&9!rr%2xr6mtc=marf*glhw&%k$sbep=u^cp2h7*+^5ur'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ["reactionroutesearch.pythonanywhere.com"]
+ALLOWED_HOSTS = ["reactionroutesearch.pythonanywhere.com",
+                 "127.0.0.1",
+                 u'localhost',
+                 u'cadillac.ucmerced.edu',]
 
 
 # Application definition
@@ -38,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'search.apps.SearchConfig',
+    'mod_wsgi.server',
 ]
 
 MIDDLEWARE = [
@@ -119,3 +123,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATIC_ROOT = '/Users/sxh/reaction-route-search/reactionroute_web/reaction/search/static/'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]

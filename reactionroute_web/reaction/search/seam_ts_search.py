@@ -1,6 +1,15 @@
 import pybel
 import openbabel as ob
 import numpy as np
+import logging
+
+logger = logging.getLogger(__name__)
+
+class TsEstimConvergeError(Exception):
+    def __init__(self, value):
+        self.message = value
+    def __str__(self):
+        return repr(self.message)
 
 def getGradients(ff, mol):
     gList = []
@@ -30,75 +39,74 @@ def getCoordinates(mol):
 def SeamTsSearch(mol1, mol2, forcefield='uff'):
 
     def getFAndG(molA, molB):
-        print "in getFAndG"
+        logger.debug("in getFAndG")
         ff1 = ob.OBForceField.FindForceField(forcefield)
         ff2 = ob.OBForceField.FindForceField(forcefield)
         ff1.Setup(molA.OBMol) # Have to setup the molecule everytime before calculating energy/gradients
         e1 = ff1.Energy() # Energy() call is needed to generate gradients
-        print "e1 = ", e1
+        if e1 != e1:
+            raise ValueError('e1 is nan')
+        logger.debug("e1 = {}".format(e1))
         g1 = getGradients(ff1, molA)
-        print "g1 = ", g1
+        logger.debug("g1 = {}".format(g1))
         ff2.Setup(molB.OBMol)
         e2 = ff2.Energy()
-        print "e2 = ", e2
+        # logger.debug("e2 = ", e2)
         g2 = getGradients(ff2, molB)
-        print "g2 = ", g2
+        # logger.debug("g2 = ", g2)
         alpha = 20 # arbitrary constant. Bigger alpha means smaller weight on energy difference
-        print "(g1+g2)/2= ", (g1+g2)/2
-        print "(2/alpha)*(e1-e2)*(g1-g2) = ", (2.0/alpha)*(e1-e2)*(g1-g2)
+        # logger.debug("(g1+g2)/2= ", (g1+g2)/2)
+        # logger.debug("(2/alpha)*(e1-e2)*(g1-g2) = ", (2.0/alpha)*(e1-e2)*(g1-g2))
         return (e1+e2)/2+(e1-e2)*(e1-e2)/alpha, (g1+g2)/2+(2.0/alpha)*(e1-e2)*(g1-g2)
 
     def lineSearch(direction, coords, f):
         # ref: https://en.wikipedia.org/wiki/Nonlinear_conjugate_gradient_method
         #      https://en.wikipedia.org/wiki/Backtracking_line_search
-        print "\n**********in lineSearch"
+        logger.debug("\n**********in lineSearch")
         step = 0.05 # maximum step number, shrink until energy are sufficiently decreased.
-        print "direction = ", direction
+        # logger.debug("direction = ", direction)
         directionNorm = np.linalg.norm(direction)
-        print "directionNorm = ", directionNorm
         directionUnit = direction/directionNorm
-        print "directionUnit = ", directionUnit
-        while True:
+        for iteration in range(200):
             newCoords = coords + step * directionUnit
-            print "newCoords = ", newCoords
+            # logger.debug("newCoords = ", newCoords)
             fNew = getFAndG(updateCoords(mol1, newCoords), updateCoords(mol2, newCoords))[0]
-            print "fNew and f - step*0.5 are ", fNew, f - step*0.5
+            # logger.debug("fNew and f - step*0.5 are ", fNew, f - step*0.5)
             if fNew < f - step*0.5:
                 return newCoords
             else:
                 step = step*0.5
-
+        else:
+            raise TsEstimConvergeError('Error! line search in SeamTsSearch did not converge in 200 steps')
 
     def getBeta(directionNew, direction):
         return directionNew.dot(directionNew.T)/direction.dot(direction.T)
 
-    print "before iterations..."
+    logger.info("before iterations...")
     f, g = getFAndG(mol1, mol2)
-    print "f and g are ", f, g
+    # logger.debug("f and g are ", f, g)
     directionNew = g # g from openbabel is direction (-g)
     conjugateDirectionNew = directionNew
     c = getCoordinates(mol1)
-    print "coordinates \n", c
+    print("coordinates \n", c)
     cNew = lineSearch(directionNew, c, f)
     c = cNew
     conjugateDirection = conjugateDirectionNew
     direction = directionNew
     mol1 = updateCoords(mol1, c)
     mol2 = updateCoords(mol2, c)
-    iteration = 0
-    while True:
-        iteration += 1
-        print "\n\n============calculating iteration number {}".format(iteration)
+    for iteration in xrange(50):
+        # print("\n\n============calculating iteration number {}".format(iteration))
         fNew, gNew = getFAndG(mol1, mol2)
-        print "fNew and gNew = ", fNew, gNew
-        print "f and fNew = ", f, fNew
+        # logger.debug("fNew and gNew = ", fNew, gNew)
+        # logger.info("f and fNew = ", f, fNew)
         if f - fNew < 1:
             break
         directionNew = gNew
         beta = getBeta(directionNew, direction)
-        print "beta = ", beta
+        # logger.debug("beta = ", beta)
         conjugateDirectionNew = directionNew + beta * conjugateDirection
-        print "conjugateDirectionNew = ", conjugateDirectionNew
+        # logger.debug("conjugateDirectionNew = ", conjugateDirectionNew)
         cNew = lineSearch(conjugateDirectionNew, c, fNew)
         c = cNew
         direction = directionNew
@@ -107,6 +115,8 @@ def SeamTsSearch(mol1, mol2, forcefield='uff'):
         conjugateDirection = conjugateDirectionNew
         mol1 = updateCoords(mol1, c)
         mol2 = updateCoords(mol2, c)
+    else:
+        raise TsEstimConvergeError('Error! SeamTsSearch did not converge in 50 steps')
     return mol1
 
 def main():
@@ -130,8 +140,7 @@ def main():
     f_qst3.close()
 
 
-    
+
 
 if __name__ == "__main__":
     main()
-
