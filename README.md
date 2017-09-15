@@ -9,8 +9,8 @@ add the obtained structures to the next generation of intermediates, subject to 
 intermediates in the next generation according to bond change rules, and adds the obtained structures to the third generation. 
 Then it repeats the breadth-first-search process until the target is found. 
 # Bond Changing Rules
-- No more than two bond breakings and two bond formations simultaniously, except for
-- Diels-Alder reaction involving three bond breakings and three bond formations
+- No more than two bond breakings and two bond formations simultaniously
+- Diels-Alder reaction is considered as a special case because it involves three bond breakings and three bond formations
 - All atoms in post-change structures should have a stable coordination number
 # Options
 ## Inactive Atoms
