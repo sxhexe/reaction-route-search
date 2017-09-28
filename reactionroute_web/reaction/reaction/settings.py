@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'search.apps.SearchConfig',
     'mod_wsgi.server',
+    'demo.apps.DemoConfig',
 ]
 
 MIDDLEWARE = [
