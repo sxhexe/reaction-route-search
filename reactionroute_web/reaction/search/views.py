@@ -3,15 +3,36 @@ from django.shortcuts import render
 def index(request):
     return render(request, 'index.html')
 
+def ketcher(request):
+    return render(request, 'ketcher-master/ketcher.html')
+
 def result(request):
     import reactionroute
     import logging
     import os
     import re
+
+    def parseActiveList(activeList):
+        result = []
+        if len(activeList) == 0:
+            return set()
+        if activeList[0] == '(':
+            activeList = activeList[2:-2]
+        intervals = activeList.split()
+        for interval in intervals:
+            if ':' in interval:
+                low, high = zip(*map(int, interval.split(':')))
+                result += range(low+1, high+2)
+            else:
+                result.append(int(interval)+1)
+        return set(result)
+
     trueFalse = {u'Yes': True, u'No': False, u'yes': True, u'no': False, u'y': True, u'n': False}
     logging.basicConfig(filename = "result", level=logging.INFO)
     reactant = request.POST["reactant"]
     product = request.POST["product"]
+    activeList = parseActiveList(request.POST['activeAtoms'])
+
     print request.POST
     if isinstance(reactant, unicode):
         reactant = reactant.encode("ascii")
@@ -32,7 +53,7 @@ def result(request):
     if rr._doTs:
         rr._tsThresh = float(request.POST['tsEnergyThresh'])
         rr._gaussianTsKeywords = request.POST['tsKeywords'].encode('ascii')
-
+    rr._activeList = activeList
     head, target= rr.isomerSearch()
     rr.printTextReactionMap(head)
     paths = []

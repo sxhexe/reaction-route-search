@@ -1,11 +1,15 @@
 # reactionroute-specific
 *.svg
 *.gv
-openbabel2.4.1Build/
-openbabel2.4.1Install/
-reactionroute_web/static/
-reactionroute_web/reaction/search/gaussian/
+dot/
+/openbabel2.4.1Build/
+/openbabel2.4.1Install/
+pics/
+gaussian/
 *result
+
+# database
+*.DS_Store
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

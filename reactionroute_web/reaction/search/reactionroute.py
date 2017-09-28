@@ -125,6 +125,7 @@ class ReactionRoute:
         self._gaussianTsKeywords = '# pm6 3-21g opt=(ts,noeigen,calcfc,maxcyc=100)'
         self._energyBaseLine = 0.0
         self._ignoreList = set()
+        self._activeList = set()
         self._invalidStructures = set()
         self._reactantString = reactantString
         self._productString = productString
@@ -302,6 +303,10 @@ class ReactionRoute:
         productMol = fromSmiToMol(self._productString)
         self._productString = getCanonicalSmiles(productMol)
         logging.info("product = {}".format(self._productString))
+        if self._activeList and not self._ignoreList:
+            allset = set(range(reactantMol.NumAtoms()))
+            self._ignoreList = allset - self._activeList
+            logging.info("ignoreList = {}".format(self._ignoreList))
         from collections import deque
         q = deque()
         head = ReactionGraphNode(mol=reactantMol)
