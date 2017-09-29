@@ -39,7 +39,7 @@ def fromSmiToMol(smiles):
         return mol
     else:
         logging.error("converting failure from Smiles to molecule")
-        sys.exit()
+        raise SmilesError("Failed to convert SMILES to molecule")
 
 def smilesToFilename(smiles):
     fileName = ''
@@ -62,6 +62,11 @@ class EnergyReadingError(Exception):
     def __str__(self):
         return repr(self.message)
 
+class SmilesError(Exception):
+    def __init__(self, value):
+        self.message = value
+    def __str__(self):
+        return repr(self.message)
 
 class ReactionGraphEdge:
     def __init__(self, fromNode, node, brokenBonds, createdBonds):

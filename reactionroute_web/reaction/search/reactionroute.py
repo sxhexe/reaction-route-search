@@ -6,6 +6,9 @@ import os
 from seam_ts_search import *
 
 
+
+
+
 def printMol(mol,fileFormat = "gjf", keywords = None, printOut = False):
     conv = ob.OBConversion()
     conv.SetOutFormat(fileFormat)
@@ -39,7 +42,7 @@ def fromSmiToMol(smiles):
         return mol
     else:
         logging.error("converting failure from Smiles to molecule")
-        sys.exit()
+        raise SmilesError("Failed to convert SMILES to molecule")
 
 def smilesToFilename(smiles):
     fileName = ''
@@ -56,12 +59,18 @@ def smilesToFilename(smiles):
         fileName += c
     return fileName
 
+    
 class EnergyReadingError(Exception):
     def __init__(self, value):
         self.message = value
     def __str__(self):
         return repr(self.message)
 
+class SmilesError(Exception):
+    def __init__(self, value):
+        self.message = value
+    def __str__(self):
+        return repr(self.message)
 
 class ReactionGraphEdge:
     def __init__(self, fromNode, node, brokenBonds, createdBonds):
@@ -102,6 +111,9 @@ class ReactionRoute:
                                  (6,0):[4],
                                  (6,1):[3],
                                  (6,-1):[3],
+                                 (7,-1):[2],
+                                 (7,0):[3],
+                                 (7,1):[4],
                                  (8,0):[2],
                                  (8,1):[3],
                                  (8,-1):[1],

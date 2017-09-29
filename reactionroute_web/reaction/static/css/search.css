@@ -1,9 +1,16 @@
-form.userInput {
-  margin: 15%;
-  margin-top: 12%;
+#inputForm {
+  padding: 20px;
+  margin-right: 340px;
 }
 #jsmol {
-  position: fixed;
-  right: 10%;
-  top: 20%;
+  margin-top:20%;
+  float:right;
+  border: 1px solid blue;
+}
+.inputField {
+  border-bottom: 1px solid grey;
+  padding-bottom: 20px;
+}
+.inputBox {
+  margin-left: 10%;
 }

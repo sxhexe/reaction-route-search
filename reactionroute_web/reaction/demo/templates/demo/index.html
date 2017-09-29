@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang='en'>
+<head>
+  <meta charset="utf-8">
+  <title>Global reaction route search</title>
+  <script type="text/javascript" src={% static "JSmol.min.js" %}></script>
+  <script type="text/javascript" src="/static/demo/form.js"></script>
+  <link href="/static/css/search.css" rel="stylesheet" type="text/css"/>
+<head>
+<body>
+  <div id="document">
+    <div id="jsmol"></div>
+    <!-- <iframe id="ifKetcher" src="ketcher-master/ketcher.html" width="800" height="600"></iframe> -->
+    <div id='inputForm'>
+      <form id='input' method="post" class="userInput" action="result.html" target="_blank">{% csrf_token %}
+        <h1>Demo - Reaction Route Generator</h1>
+        <p>
+          This is a demo for the <a href="https://github.com/sxhexe/reaction-route-search" target="_blank">reaction route generator</a> (RRG) project.
+          The demo supports simple reaction route searching. It requires a reactant and a target product be provided to search for possible reaction pathways between them. Energy calculation and transition state searching are not supported by the demo but will be supported by the full version. The project is still under heavy development and the demo will also be updated from time to time.
+        <div id="reactantInput" class="inputField">
+          <h2>Reactant</h2>
+          <p>
+            The default input format for reactant and product is SMILES string. Not familiar with SMILES string? Check out the tutorial
+            <a href="http://opensmiles.org/opensmiles.html" target="_blank"> here </a> or have the site fill out an <a href="#" onclick="fillExample(); return false;">example case</a>. The demo supports atoms C, H, O, N, Cl, Br.
+          </p>
+          <p>The reactant SMILES string can be loaded into the JSmol viewer on the right, where active atoms can be chosen. Once chosen, only active atoms will be allowed to change their connectivity. If left blank, all atoms will be active. For medium to large sized systems, it is strongly recommended that a small number of active atoms are chosen to accelerate the calculation. Note that due to restrictions of JSmol, please allow ~0.5 second between each mouse click while choosing active atoms. </p>
+          <div id="reactantInputBox" class="inputBox">
+            reactant SMILES <br>
+            <input id="reactantSMILESInput" type="text" name="reactant" value="C" size=35><br><br>
+            active atoms <br>
+            <input id='activeAtomsInput' type='text' name='activeAtoms' size=35><br><br>
+          </div>
+        </div>
+        <div id="productInput" class="inputField">
+          <h2> Target Product </h2>
+          <p>Please provide your target product below with a SMILES string. Note that the product must have the same set of atoms as the reactant. Only connectivity can be different. </p>
+          <div class="inputBox">
+            product SMILES<br>
+            <input id='productSMILESInput' type="text" name="product" size=35><br><br>
+          </div>
+        </div>
+        <div id="optionInput" class="inputField">
+          <h2> Options </h2>
+          <h3> max. step </h3>
+          <p>Maximum steps allowed for reaction paths.</p>
+          <input type='text' name='maxStep' value='3' class='inputBox' size=35><br>
+          <h3> max. extra step </h3>
+          <p>Maximum extra steps allowed after the target is found. This option exists because the most possible pathways are not necessarily the shortest ones. Longers ones can be more favorable if they have lower energy barriers along the path. </p>
+          <input type='text' name='maxExtraStep' value='1' class='inputBox' size=35><br>
+          <!-- structure screening
+          <input type='radio' name='structureScreen' value='Yes' checked> Yes
+          <input type='radio' name='structureScreen' value='No'> No<br>
+          calculate energy
+          <input id='doCalculationYes' type='radio' name='doCalculation' value='Yes' onclick='showCalculationDetails()'> Yes
+          <input type='radio' name='doCalculation' value='No' checked onclick='hideCalculationDetails()'> No<br> -->
+        </div>
+        <br> <button type="submit" class="submitButton">Submit</button>
+      </form>
+    </div>
+  </div>
+</body>
