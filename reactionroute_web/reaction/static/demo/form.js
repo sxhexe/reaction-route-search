@@ -26,6 +26,11 @@ $(document).ready(function() {
   $("#jsmol").append(activeAtomsButton);
 });
 
+function show3D() {
+  Jmol.script(myJmol, 'load $'+$("#reactantSMILESInput").val()+'; set picking SELECT ATOM; select None; selectionHalos ON');
+}
+
+
 function fillExample() {
   $("#reactantSMILESInput").val("OC=O.CO");
   $("#productSMILESInput").val("COC=O.O");

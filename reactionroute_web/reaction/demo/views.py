@@ -13,24 +13,6 @@ def result(request):
     import os
     import re
 
-    class Timeout():
-        """Timeout class using ALARM signal."""
-        class Timeout(Exception):
-            pass
-
-        def __init__(self, sec):
-            self.sec = sec
-
-        def __enter__(self):
-            signal.signal(signal.SIGALRM, self.raise_timeout)
-            signal.alarm(self.sec)
-
-        def __exit__(self, *args):
-            signal.alarm(0)    # disable alarm
-
-        def raise_timeout(self, *args):
-            raise Timeout.Timeout()
-
     def parseActiveList(activeList):
         result = []
         if len(activeList) == 0:
@@ -113,13 +95,10 @@ def result(request):
         pathsSvgFile.readline()
     pathsSvg = pathsSvgFile.read()
     pathsSvg = pathsSvg.replace('search', '')
+    pathsSvgFile.close()
     resultHtml = '<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Global reaction route search result</title><head><body>' + pathsSvg + '</body>'
-    resultHtmlFile = open('search/templates/result.html', 'w')
+    resultHtmlFile = open('demo/templates/demo/result.html', 'w')
     resultHtmlFile.write(resultHtml)
     resultHtmlFile.close()
-    return render(request, 'result.html', {
-        'reactant': reactant,
-        'product': product,
-        'svgString': pathsSvg,
-        }
-    )
+    print('rendering result page')
+    return render(request, 'demo/result.html')

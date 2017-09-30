@@ -3,7 +3,6 @@ import openbabel as ob
 import sys
 import logging
 import os
-from seam_ts_search import *
 
 
 def printMol(mol,fileFormat = "gjf", keywords = None, printOut = False):
@@ -754,85 +753,7 @@ class ReactionRoute:
                         dotFile.write("    \"" + node.smiles + "\" -> \"" + path[i+1].smiles + "\";\n")
         dotFile.write("}\n")
 
-    def getTsEstim(self, node, edge):
-        mol1 = pybel.readstring('sdf', pybel.Molecule(node.mol).write('sdf'))
-        mol1.make3D('uff')
-        for bondData in edge.createdBonds:
-            self.createNewBond(mol1.OBMol, mol1.atoms[bondData[0]-1].OBAtom, mol1.atoms[bondData[1]-1].OBAtom, bondData[2], bondData[3])
-        mol1.localopt('uff')
-        mol2 = pybel.readstring('sdf', mol1.write('sdf'))
-        for bondData in edge.createdBonds:
-            self.breakBond(mol1.OBMol, mol1.atoms[bondData[0]-1].OBAtom, mol1.atoms[bondData[1]-1].OBAtom, bondData[2], bondData[3])
-        for bondData in edge.brokenBonds:
-            self.breakBond(mol2.OBMol, mol2.atoms[bondData[0]-1].OBAtom, mol2.atoms[bondData[1]-1].OBAtom, bondData[2], bondData[3])
-        try:
-            return SeamTsSearch(mol1, mol2, 'uff')
-        except TsEstimConvergeError:
-            print("TS estimate convergence failure")
-            logging.error("TS estimate convergence failure (SeamTsSearch fails)")
-            return None
 
-    def findTsOnPath(self, head):
-        from collections import deque
-        preQ = [edge for edge in head.neighbors.values() if edge.onPath]
-        q = deque(preQ)
-        visitedEdge = set()
-        if not os.path.isdir('gaussian'):
-            os.system('mkdir gaussian')
-        if os.path.isdir('gaussian/ts'):
-            os.system('rm -f gaussian/ts/*')
-        else:
-            os.system('mkdir gaussian/ts')
-        while q:
-            currEdge = q.popleft()
-            visitedEdge.add((currEdge.fromNode.smiles, currEdge.node.smiles))
-            print('\n========finding TS=======')
-            print(currEdge.fromNode.smiles, '->', currEdge.node.smiles)
-            print(visitedEdge)
-            if (currEdge.node.smiles, currEdge.fromNode.smiles) in visitedEdge:
-                print('reversed TS is calculated before')
-                print(currEdge.node.neighbors)
-                try:
-                    reverseEdge = currEdge.node.neighbors[currEdge.fromNode.smiles]
-                except KeyError:
-                    import pdb; pdb.set_trace()
-                currEdge.ts = reverseEdge.ts
-                currEdge.tsEnergy = reverseEdge.tsEnergy
-            else:
-                print('calculating TS')
-                mol = currEdge.fromNode.mol
-                currTs = self.getTsEstim(currEdge.fromNode, currEdge)
-                if currTs is not None:
-                    print('TS esitimate:')
-                    print(currTs.write('mol'))
-                    currEdge.ts = currTs
-                    filename = smilesToFilename(currEdge.fromNode.smiles) + '-' + smilesToFilename(currEdge.node.smiles)
-                    currTs.title = "ReactionRoute.findTsOnPath"
-                    opt = {'k': self._gaussianTsKeywords}
-                    currTs.write('gjf', 'gaussian/ts/'+filename+'.com', overwrite=True, opt=opt)
-                    currTs.title = ''
-                    gaussianCall = ''
-                    for c in filename:
-                        if c == '(' or c == ')' or c == '$':
-                            gaussianCall += '\\'
-                        gaussianCall += c
-                    print("gdv gaussian/ts/"+gaussianCall+".com")
-                    logging.info("gdv gaussian/ts/"+gaussianCall+".com")
-                    success = os.system('gdv gaussian/ts/'+gaussianCall+'.com')
-                    try:
-                        absoluteTsEnergy = self.getGaussianEnergy('gaussian/ts/'+filename+'.log')
-                        currEdge.tsEnergy = absoluteTsEnergy - self._energyBaseLine
-                        print('TS successfully calculated. The energy is {}'.format(currEdge.tsEnergy))
-                    except EnergyReadingError:
-                        currEdge.tsEnergy = 'gauTS E'
-                else:
-                    print('TS calculation failed')
-                    currEdge.ts = None
-                    currEdge.tsEnergy = 'tsEstim'
-            for molSmiles, nextEdge in currEdge.node.neighbors.items():
-                if nextEdge.onPath and (currEdge.node.smiles, molSmiles) not in visitedEdge:
-                    print('adding {} -> {} to the queue'.format(currEdge.node.smiles, molSmiles))
-                    q.append(nextEdge)
 
 
 if __name__ == "__main__":
