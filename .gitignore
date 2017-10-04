@@ -6,7 +6,7 @@ dot/
 /openbabel2.4.1Install/
 pics/
 gaussian/
-*result
+*result.html
 
 # database
 *.DS_Store
