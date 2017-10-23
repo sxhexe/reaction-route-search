@@ -3,6 +3,8 @@ This tool is able to search for the most possible reaction pathways given a reac
 under various user-defined restrictions. The result will be shown as a graph in a webpage. 
 The purpose of this tool is to save time and money for exploring new synthesis route by pre-screening 
 possible reaction routes, as well as to provide mechanistic insight for reactions that has an undetermined mechanism. 
+# Demo
+The [demo](http://reactionroutesearch.pythonanywhere.com/demo/) supports simple reaction route searching. It requires a reactant and a target product be provided to search for possible reaction pathways between them. Energy calculation and transition state searching are not supported by the demo. 
 # How it works
 From reactant, the tool explores every possible bond changes or combinations of them under some pre-defined rules, 
 add the obtained structures to the next generation of intermediates, subject to some screening. Then it transforms every
