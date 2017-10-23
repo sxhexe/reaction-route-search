@@ -62,7 +62,7 @@ def result(request):
 
     rr.printTextReactionMap(head)
     paths = []
-    rr.findDfsPath(head, target, paths, rr.targetLeastStep)
+    rr.findDfsPath(head, target, paths, rr._targetLeastStep)
 
     rr.labelPathItems(paths, head)
     if rr._doTs:
@@ -74,7 +74,7 @@ def result(request):
     pathsSvgFile = open("static/"+reactant+'-'+product+".svg",'r')
     for i in range(6):
         pathsSvgFile.readline()
-    pathsSvg = pathsSvgFile.read()
+    pathsSvg = pathsSvgFile.read().replace('href="', 'href="/')
     pathsSvgFile.close()
     resultHtml = '<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Global reaction route search result</title><head><body>' + pathsSvg + '</body>'
     resultHtmlFile = open('search/templates/result.html', 'w')
