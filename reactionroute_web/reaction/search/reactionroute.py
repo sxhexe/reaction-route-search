@@ -5,10 +5,6 @@ import logging
 import os
 from seam_ts_search import *
 
-
-
-
-
 def printMol(mol,fileFormat = "gjf", keywords = None, printOut = False):
     conv = ob.OBConversion()
     conv.SetOutFormat(fileFormat)
@@ -59,7 +55,7 @@ def smilesToFilename(smiles):
         fileName += c
     return fileName
 
-    
+
 class EnergyReadingError(Exception):
     def __init__(self, value):
         self.message = value
@@ -102,6 +98,7 @@ class ReactionGraphNode:
 
 class ReactionRoute:
     def __init__(self, reactantString = None, productString = None):
+        # Possible coordination number for each atom.
         self._allowedCoordNum = {(1,-1):[],
                                  (1,0):[1],
                                  (1,1):[],
@@ -141,15 +138,16 @@ class ReactionRoute:
         self._invalidStructures = set()
         self._reactantString = reactantString
         self._productString = productString
-        self.targetLeastStep = 100
-        self.targetFound = False
-        self.reactionMap = {}
+        self._targetLeastStep = 100
+        self._targetFound = False
+        self._reactionMap = {}
         self._energyMap = {}
-        self.fragmentEnergyMap = {}
+        self._fragmentEnergyMap = {}
         self._brokenBonds = []
         self._createdBonds = []
 
     def canBreakOrFormBond(self, atom, breakOrForm, nElec):
+        # Decide if an atom can break or form bond in a certain way (get or lose certain number of electrons)
         formalCharge = atom.GetFormalCharge()
         atomicNum = atom.GetAtomicNum()
         nBonds = 0
@@ -168,6 +166,7 @@ class ReactionRoute:
             return 0
 
     def createNewBond(self, mol, atom1, atom2, elecFromAtom1, elecFromAtom2):
+        # Create a bond in the searching process. Keeps track of bond order, formal charge, self._createdBonds and self._brokenBonds
         bond = atom1.GetBond(atom2)
         mol.BeginModify()
         if bond == None:
@@ -189,15 +188,18 @@ class ReactionRoute:
             atom2.SetFormalCharge(atom2.GetFormalCharge()-1)
         mol.EndModify()
         if (atom1.GetIdx(), atom2.GetIdx(), elecFromAtom1, elecFromAtom2, bondOrder+1) not in self._brokenBonds:
+            # If the bond has been broken before, this is just restoring it, so the corresponding record in self._brokenBonds will be deleted and no new record is added.
             self._createdBonds.append((atom1.GetIdx(), atom2.GetIdx(), elecFromAtom1, elecFromAtom2, bondOrder))
             logging.debug("adding ({}, {}, {}, {}, {}) to createdBonds".format(atom1.GetIdx(), atom2.GetIdx(), elecFromAtom1, elecFromAtom2, bondOrder))
         else:
+            # If the bond has not been broken before, it is a newly changed bond. We add the record to self._createdBonds.
             self._brokenBonds.remove((atom1.GetIdx(), atom2.GetIdx(), elecFromAtom1, elecFromAtom2, bondOrder+1))
             logging.debug("removing ({}, {}, {}, {}, {}) from brokenBonds".format(atom1.GetIdx(), atom2.GetIdx(), elecFromAtom1, elecFromAtom2, bondOrder+1))
         logging.debug("new bond {} - {} is formed".format(atom1.GetIdx(), atom2.GetIdx()))
         return bond
 
     def breakBond(self, mol, atom1, atom2, elecToAtom1, elecToAtom2):
+        # Break a bond in the searching process. Keeps track of bond order, formal charge, self._createdBonds and self._brokenBonds
         bond = atom1.GetBond(atom2)
         if bond != None:
             mol.BeginModify()
@@ -226,6 +228,7 @@ class ReactionRoute:
             return False
 
     def isInvalidStructure(self, mol):
+        # A structure will be invalid if two adjacent atoms both are charged.
         for atom1 in ob.OBMolAtomIter(mol):
             if atom1.GetFormalCharge() != 0:
                 for atom2 in ob.OBAtomAtomIter(atom1):
@@ -318,39 +321,36 @@ class ReactionRoute:
         if self._activeList and not self._ignoreList:
             allset = set(range(reactantMol.NumAtoms()))
             self._ignoreList = allset - self._activeList
-            logging.info("ignoreList = {}".format(self._ignoreList))
+        logging.info("ignoreList = {}".format(self._ignoreList))
         from collections import deque
         q = deque()
         head = ReactionGraphNode(mol=reactantMol)
         q.append(head)
-        self.reactionMap[self._reactantString] = head
+        self._reactionMap[self._reactantString] = head
         self._energyMap = {self._reactantString: 0.0}
         if self._doPathCalculation:
-            self._energyBaseLine = self.computeQMEnergy(reactantMol, "gaussian", self._gaussianKeywords, self.fragmentEnergyMap)
+            self._energyBaseLine = self.computeQMEnergy(reactantMol, "gaussian", self._gaussianKeywords, self._fragmentEnergyMap)
         else:
             self._energyBaseLine = 0.0
         head.energy = 0.0
         nStep = 0
 
-        while len(q) != 0:
+        while q: # start Breadth-First-Search
             qSize = len(q)
             nStep += 1
             logging.info("=========================================================")
             logging.info("                     nStep = "+str(nStep))
-            if nStep >= self._maxStep or nStep > self.targetLeastStep + self._maxExtraStep:
+            if nStep >= self._maxStep or nStep > self._targetLeastStep + self._maxExtraStep:
+                logging.info("step number {}, exceeding maximum step {}".format(nStep, min(self._maxStep, self._targetLeastStep+self._maxExtraStep)))
                 break
-            for nNode in range(qSize):
+            for nNode in range(qSize): # process intermediates one generation at a time
                 logging.info("***************************************************")
                 logging.info("             processing a new molecule")
                 currNode = q.popleft()
                 if currNode.smiles == self._productString:
                     continue
                 newMol = ob.OBMol(currNode.mol)
-                # print "newMol is ", printMol(newMol, 'can')
-                # print "currNode.smiles = ", currNode.smiles
-                # if nStep == 2:
-                #     import pdb
-                #     pdb.set_trace()
+                # The six containers are constructed for
                 zeroElecGivers = set()
                 oneElecGivers = set()
                 twoElecGivers = set()
@@ -379,18 +379,18 @@ class ReactionRoute:
                     for atom in atomSet:
                         logging.info(str(atom.GetIdx())+ " " + str(atom.GetAtomicNum()))
 
-                printAtomSet(zeroElecGivers, "zeroElecGivers")
-                printAtomSet(twoElecGivers, "twoElecGivers")
-                printAtomSet(zeroElecTakers, "zeroElecTakers")
-                printAtomSet(twoElecTakers, "twoElecTakers")
+                # printAtomSet(zeroElecGivers, "zeroElecGivers")
+                # printAtomSet(twoElecGivers, "twoElecGivers")
+                # printAtomSet(zeroElecTakers, "zeroElecTakers")
+                # printAtomSet(twoElecTakers, "twoElecTakers")
 
                 def addMol():
                     newMolSmiles = getCanonicalSmiles(newMol)
                     logging.info("newSmiles = "+newMolSmiles)
                     if newMolSmiles == self._productString:
                         logging.info("target found!!!")
-                        self.targetLeastStep = nStep
-                        self.targetFound = True
+                        self._targetLeastStep = nStep
+                        self._targetFound = True
                     if self._structureScreen:
                         if newMolSmiles in self._invalidStructures:
                             logging.info("This molecule is invalid according to isInvalidStructure, not adding it")
@@ -399,11 +399,11 @@ class ReactionRoute:
                             logging.info("This molecule is invalid according to isInvalidStructure, not adding it")
                             self._invalidStructures.add(newMolSmiles)
                             return
-                    if newMolSmiles not in self.reactionMap:
+                    if newMolSmiles not in self._reactionMap:
                         logging.info("new molecule found! Adding it to the map")
                         # if newMolSmiles not in self._energyMap:
                         #     if self._doAllCalculation:
-                        #         absoluteEnergy = self.computeQMEnergy(newMol, "gaussian", self._gaussianKeywords, self.fragmentEnergyMap)
+                        #         absoluteEnergy = self.computeQMEnergy(newMol, "gaussian", self._gaussianKeywords, self._fragmentEnergyMap)
                         #         logging.debug("absoluteEnergy is %f kcal/mol"%(absoluteEnergy))
                         #         logging.debug("energy base line is "+str(self._energyBaseLine))
                         #         energy = absoluteEnergy - self._energyBaseLine
@@ -430,7 +430,7 @@ class ReactionRoute:
                         #     logging.info("not screening energy, adding it directly")
                         #     newNode.energy = energy
                         newNode = ReactionGraphNode(mol=newMol, depth=nStep)
-                        self.reactionMap[newMolSmiles] = newNode
+                        self._reactionMap[newMolSmiles] = newNode
                         if newMolSmiles not in currNode.neighbors:
                             currNode.neighbors[newMolSmiles] = ReactionGraphEdge(currNode, newNode, self._brokenBonds, self._createdBonds)
                             q.append(newNode)
@@ -439,9 +439,9 @@ class ReactionRoute:
                         if currNode.smiles != newMolSmiles:
                             logging.debug("adding {} - {}".format(currNode.smiles, newMolSmiles))
                             logging.debug("Although this molecule has been added to reactionMap, it reveals a new route. Adding only the edge...")
-                            self.reactionMap[newMolSmiles].depths.append(nStep)
+                            self._reactionMap[newMolSmiles].depths.append(nStep)
                             if newMolSmiles not in currNode.neighbors:
-                                currNode.neighbors[newMolSmiles] = ReactionGraphEdge(currNode, self.reactionMap[newMolSmiles], self._brokenBonds, self._createdBonds)
+                                currNode.neighbors[newMolSmiles] = ReactionGraphEdge(currNode, self._reactionMap[newMolSmiles], self._brokenBonds, self._createdBonds)
                     logging.debug("finish adding this molecule, no matter added or not")
 
                 # Now consider all possible elementary reaction rule.
@@ -637,9 +637,9 @@ class ReactionRoute:
 
 
         logging.info("targetSmiles = "+self._productString)
-        logging.info("targetLeastStep = {}".format(self.targetLeastStep))
+        logging.info("targetLeastStep = {}".format(self._targetLeastStep))
         logging.info("===============End of the isomer search===============")
-        return head, self.reactionMap[self._productString]
+        return head, self._reactionMap[self._productString]
 
     def printTextReactionMap(self, head):
         from collections import deque
@@ -666,8 +666,8 @@ class ReactionRoute:
         visited = set()
         if not os.path.isdir("dot"):
             os.system("mkdir dot")
-        if not os.path.isdir("search/static/pics"):
-            os.system("mkdir search/static/pics")
+        if not os.path.isdir("static/pics"):
+            os.system("mkdir static/pics")
         dotFile = open("dot/dot.gv","w")
         dotFile.write("digraph G  {\nconcentrate = true\n")
         while len(q) > 0:
@@ -678,12 +678,12 @@ class ReactionRoute:
                     visited.add(currEdge.node.smiles)
                     fileString = smilesToFilename(currEdge.node.smiles)
                     formatString = 'svg'
-                    picFile = open("search/static/pics/"+fileString+'.'+formatString, 'w')
+                    picFile = open("static/pics/"+fileString+'.'+formatString, 'w')
                     picFile.write(printMol(fromSmiToMol(currEdge.node.smiles), "svg"))
                     if self._doPathCalculation:
-                        dotFile.write("    \""+currEdge.node.smiles+"\" [image = \"search/static/pics/"+fileString+'.'+formatString+"\", label = \""+str(currEdge.node.energy)+" kcal/mol\", shape = none, labelloc = b]\n")
+                        dotFile.write("    \""+currEdge.node.smiles+"\" [image = \"static/pics/"+fileString+'.'+formatString+"\", label = \""+str(currEdge.node.energy)+" kcal/mol\", shape = none, labelloc = b]\n")
                     else:
-                        dotFile.write("    \""+currEdge.node.smiles+"\" [image = \"search/static/pics/"+fileString+'.'+formatString+"\", label = \"\", shape = none, labelloc = b]\n")
+                        dotFile.write("    \""+currEdge.node.smiles+"\" [image = \"static/pics/"+fileString+'.'+formatString+"\", label = \"\", shape = none, labelloc = b]\n")
                     for molSmiles, nextEdge in currEdge.node.neighbors.items():
                         if pathOnly and nextEdge.onPath or not pathOnly:
                             q.append(nextEdge)
@@ -717,7 +717,7 @@ class ReactionRoute:
                 if i+1 < len(path):
                     if self._doPathCalculation and self._energyScreen:
                         if path[i+1].smiles not in self._energyMap:
-                            absoluteEnergy = self.computeQMEnergy(path[i+1].mol, "gaussian", self._gaussianKeywords, self.fragmentEnergyMap)
+                            absoluteEnergy = self.computeQMEnergy(path[i+1].mol, "gaussian", self._gaussianKeywords, self._fragmentEnergyMap)
                             logging.debug("absoluteEnergy is %f kcal/mol"%(absoluteEnergy))
                             logging.debug("energy base line is "+str(self._energyBaseLine))
                             energy = absoluteEnergy - self._energyBaseLine
@@ -742,8 +742,8 @@ class ReactionRoute:
     def printGraphicPathMap(self, paths):
         if not os.path.isdir("dot"):
             os.system("mkdir dot")
-        if not os.path.isdir("search/static/pics"):
-            os.system("mkdir search/static/pics")
+        if not os.path.isdir("static/pics"):
+            os.system("mkdir static/pics")
         dotFile = open("dot/paths.gv", 'w')
         dotFile.write("digraph paths {")
         visitedNode = set()
@@ -753,8 +753,8 @@ class ReactionRoute:
                 if node not in visitedNode:
                     visitedNode.add(node)
                     if self._doPathCalculation:
-                        node.energy = self.computeQMEnergy(node.mol, "gaussian", self._gaussianKeywords, self.fragmentEnergyMap)
-                    dotFile.write("    \"" + node.smiles + "\" [image = \"search/static/pics/" + smilesToFilename(node.smiles) + ".svg\", label = \""+ str(node.energy) + " kcal/mol\", shape = none, labelloc = b]\n")
+                        node.energy = self.computeQMEnergy(node.mol, "gaussian", self._gaussianKeywords, self._fragmentEnergyMap)
+                    dotFile.write("    \"" + node.smiles + "\" [image = \"static/pics/" + smilesToFilename(node.smiles) + ".svg\", label = \""+ str(node.energy) + " kcal/mol\", shape = none, labelloc = b]\n")
                 if i < len(path)-1:
                     if (node, path[i+1]) not in visitedEdge:
                         visitedEdge.add((node, path[i+1]))
@@ -807,6 +807,13 @@ class ReactionRoute:
                 currEdge.tsEnergy = reverseEdge.tsEnergy
             else:
                 print('calculating TS')
+                if len(currEdge.brokenBonds) == 0:
+                    print('pure bond forming reaction, energy goes downhill only, no TS')
+                    return
+                if len(currEdge.createdBonds) == 0:
+                    print('pure bond breaking reaction, energy goes uphill only, no TS')
+                    return
+
                 mol = currEdge.fromNode.mol
                 currTs = self.getTsEstim(currEdge.fromNode, currEdge)
                 if currTs is not None:
@@ -850,14 +857,13 @@ if __name__ == "__main__":
     rr.printTextReactionMap(head)
     paths = []
 
-    head, target= rr.isomerSearch()
-    rr.printTextReactionMap(head)
-    paths = []
-    rr.findDfsPath(head, target, paths, rr.targetLeastStep)
+    rr.findDfsPath(head, target, paths, rr._targetLeastStep)
     rr.labelPathItems(paths, head)
     if rr._doTs:
         rr.findTsOnPath(head)
     rr.printGraphicReactionMap(head)
-    os.system("dot -Tsvg dot/dot.gv -o reaction-"+sys.argv[1]+".svg")
+    if not os.path.isdir('reactionmap'):
+        os.system('mkdir reactionmap')
+    os.system("dot -Tsvg dot/dot.gv -o "+sys.argv[1]+'-'+sys.argv[2]+".svg")
     # rr.printGraphicPathMap(paths)
     # os.system("dot -Tsvg dot/paths.gv -o paths-"+sys.argv[1]+".svg")

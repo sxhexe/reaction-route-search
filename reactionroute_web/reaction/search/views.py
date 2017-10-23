@@ -3,6 +3,9 @@ from django.shortcuts import render
 def index(request):
     return render(request, 'index.html')
 
+def demo(request):
+    return render(request, 'demo.html')
+
 def result(request):
     import reactionroute
     import logging
@@ -28,7 +31,6 @@ def result(request):
     logging.basicConfig(filename = "result", level=logging.INFO)
     reactant = request.POST["reactant"]
     product = request.POST["product"]
-    activeList = parseActiveList(request.POST['activeAtoms'])
 
     print request.POST
     if isinstance(reactant, unicode):
@@ -37,10 +39,11 @@ def result(request):
         product = product.encode("ascii")
     rr = reactionroute.ReactionRoute(reactantString=reactant, productString=product)
 
+    rr._activeList = parseActiveList(request.POST['activeAtoms'])
     rr._maxStep = int(request.POST['maxStep'])
     rr._maxExtraStep = int(request.POST['maxExtraStep'])
-    rr._structureScreen = trueFalse[request.POST['structureScreen']]
-    rr._doPathCalculation = trueFalse[request.POST['doCalculation']]
+    rr._structureScreen = trueFalse[request.POST['structureScreen']] if 'structureScreen' in request.POST else True
+    rr._doPathCalculation = trueFalse[request.POST['doCalculation']] if 'doCalculation' in request.POST else False
     if rr._doPathCalculation:
         rr._energyScreen = trueFalse[request.POST['energyScreen']]
         rr._gaussianKeywords = request.POST['energyKeywords'].encode('ascii')
@@ -50,8 +53,13 @@ def result(request):
     if rr._doTs:
         rr._tsThresh = float(request.POST['tsEnergyThresh'])
         rr._gaussianTsKeywords = request.POST['tsKeywords'].encode('ascii')
-    rr._activeList = activeList
-    head, target= rr.isomerSearch()
+    try:
+        head, target= rr.isomerSearch()
+    except KeyError:
+        return render(request, 'demo/noPathFound.html')
+    except reactionroute.SmilesError:
+        return render(request, 'demo/invalidSmiles.html')
+
     rr.printTextReactionMap(head)
     paths = []
     rr.findDfsPath(head, target, paths, rr.targetLeastStep)
@@ -61,13 +69,13 @@ def result(request):
         rr.findTsOnPath(head)
 
     rr.printGraphicReactionMap(head)
-    os.system("dot -Tsvg dot/dot.gv -o reaction-"+reactant+".svg")
+    os.system("dot -Tsvg dot/dot.gv -o static/"+reactant+'-'+product+".svg")
 
-    pathsSvgFile = open("reaction-"+reactant+".svg",'r')
+    pathsSvgFile = open("static/"+reactant+'-'+product+".svg",'r')
     for i in range(6):
         pathsSvgFile.readline()
     pathsSvg = pathsSvgFile.read()
-    pathsSvg = pathsSvg.replace('search', '')
+    pathsSvgFile.close()
     resultHtml = '<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Global reaction route search result</title><head><body>' + pathsSvg + '</body>'
     resultHtmlFile = open('search/templates/result.html', 'w')
     resultHtmlFile.write(resultHtml)

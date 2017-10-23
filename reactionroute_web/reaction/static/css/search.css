@@ -3,9 +3,14 @@
   margin-right: 340px;
 }
 #jsmol {
-  margin-top:20%;
+  margin-top:330px;
   float:right;
   border: 1px solid blue;
+}
+#jsme {
+  width: 400px;
+  height: 300px;
+  float:right;
 }
 .inputField {
   border-bottom: 1px solid grey;

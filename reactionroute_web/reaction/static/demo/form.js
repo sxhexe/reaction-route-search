@@ -3,7 +3,7 @@ $(document).ready(function() {
     j2sPath: "/static/j2s",
     script: "load '/static/demo/C.mol'; selectionHalos ON; select None; set picking SELECT ATOM"
   };
-  Jmol.getApplet("myJmol", info);
+  var myJmol = Jmol.getApplet("myJmol", info);
   $("#jsmol").html(Jmol.getAppletHtml(myJmol));
   var loadReactantButton = document.createElement('button');
   loadReactantButton.onclick = function() {
@@ -24,12 +24,24 @@ $(document).ready(function() {
   };
   activeAtomsButton.textContent = 'select active';
   $("#jsmol").append(activeAtomsButton);
+  var jmeInfo = {
+    editOptions:"editEnabled",
+    options:"nocanonize",
+    use:"HTML5",
+    visible:true,
+    divId:"jsme"
+  };
+  var myJME = Jmol.getJMEApplet("myJME", jmeInfo, myJmol);
+  // $("jsme").html(Jmol.getAppletHtml(myJME));
 });
 
 function show3D() {
   Jmol.script(myJmol, 'load $'+$("#reactantSMILESInput").val()+'; set picking SELECT ATOM; select None; selectionHalos ON');
 }
 
+function drawMolecule() {
+  Jmol.show2d(myJmol, true);
+}
 
 function fillExample() {
   $("#reactantSMILESInput").val("OC=O.CO");

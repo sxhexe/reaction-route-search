@@ -6,7 +6,14 @@ dot/
 /openbabel2.4.1Install/
 pics/
 gaussian/
+*result
 *result.html
+*fort.7
+
+# psi4
+*.dma
+*.fchk
+timer.dat
 
 # database
 *.DS_Store
