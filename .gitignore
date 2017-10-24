@@ -2,8 +2,8 @@
 *.svg
 *.gv
 dot/
-/openbabel2.4.1Build/
-/openbabel2.4.1Install/
+/openbabel2.4.1Build/*
+/openbabel2.4.1Install/*
 pics/
 gaussian/
 *result

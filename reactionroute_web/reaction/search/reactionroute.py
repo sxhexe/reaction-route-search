@@ -3,6 +3,8 @@ import openbabel as ob
 import sys
 import logging
 import os
+import subprocess
+import time
 from seam_ts_search import *
 
 def printMol(mol,fileFormat = "gjf", keywords = None, printOut = False):
@@ -145,6 +147,7 @@ class ReactionRoute:
         self._fragmentEnergyMap = {}
         self._brokenBonds = []
         self._createdBonds = []
+        self._gsub = False
 
     def canBreakOrFormBond(self, atom, breakOrForm, nElec):
         # Decide if an atom can break or form bond in a certain way (get or lose certain number of electrons)
@@ -236,7 +239,7 @@ class ReactionRoute:
                         return True
         return False
 
-    def doGaussian(self, mol, fullFileName):
+    def doGaussian(self, mol, fullFileName, gsub=self._gsub):
         molCopy = ob.OBMol(mol)
         molCopy.SetTitle("ReactionRoute")
         inputFile = open("gaussian/"+fullFileName+".gjf", 'w')
@@ -249,9 +252,20 @@ class ReactionRoute:
             if c == '(' or c == ')' or c == '$':
                 gaussianCall += '\\'
             gaussianCall += c
-        print("gdv gaussian/"+gaussianCall+".gjf")
-        logging.info("gdv gaussian/"+gaussianCall+".gjf")
-        os.system("gdv gaussian/"+gaussianCall+".gjf")
+        if gsub:
+            print("gsub -fastq gaussian/"+gaussianCall+".gjf")
+            logging.info("gsub -fastq gaussian/"+gaussianCall+".gjf")
+            output = subprocess.check_output('gsub -fastq gaussian/'+gaussianCall+'.gjf', shell=True)
+            jobId = output.split()[7]
+            while True:
+                time.sleep(10)
+                outputQstat = subprocess.check_output('qstat', shell=True)
+                if jobID not in outputQstat:
+                    break
+        else:
+            print("gdv gaussian/"+gaussianCall+".gjf")
+            logging.info("gdv gaussian/"+gaussianCall+".gjf")
+            os.system("gdv gaussian/"+gaussianCall+".gjf")
         try:
             molCopyEnergy = self.getGaussianEnergy("gaussian/"+fullFileName+".log")
         except EnergyReadingError:
@@ -852,7 +866,10 @@ class ReactionRoute:
 if __name__ == "__main__":
     logging.basicConfig(filename = "result", level=logging.DEBUG)
     rr = ReactionRoute(reactantString=sys.argv[1], productString=sys.argv[2])
-
+    if '-e' in sys.argv:
+        rr._doPathCalculation = True
+    if '-q' in sys.argv:
+        rr._gsub = True
     head, target= rr.isomerSearch()
     rr.printTextReactionMap(head)
     paths = []
