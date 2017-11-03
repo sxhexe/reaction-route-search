@@ -1,5 +1,4 @@
-![build](https://travis-ci.org/sxhexe/reaction-route-search.svg?branch=master)
-# Global Reaction Route Mapping Tool
+# Global Reaction Route Mapping Tool  ![build](https://travis-ci.org/sxhexe/reaction-route-search.svg?branch=master)
 This tool is able to search for the most possible reaction pathways given a reactant and a product, 
 under various user-defined restrictions. The result will be shown as a graph in a webpage. 
 The purpose of this tool is to save time and money for exploring new synthesis route by pre-screening 
