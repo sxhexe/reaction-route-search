@@ -1,1 +1,1 @@
-cmake -DPYTHON_BINDINGS=ON -DRUN_SWIG=ON -DCMAKE_INSTALL_PREFIX=/Users/sxh/reaction-route-search/openbabel2.4.1Install 
+cmake ../openbabel-2.4.1/ -DPYTHON_BINDINGS=ON -DRUN_SWIG=ON -DCMAKE_INSTALL_PREFIX=/home/xsheng/project/reaction-route-search/openbabel2.4.1Install -DEIGEN3_INCLUDE_DIR=/home/xsheng/project/reaction-route-search/eigen3

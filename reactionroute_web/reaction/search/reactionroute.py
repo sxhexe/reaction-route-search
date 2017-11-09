@@ -1,4 +1,3 @@
-import pybel
 import openbabel as ob
 import sys
 import logging
@@ -99,7 +98,7 @@ class ReactionGraphNode:
             self.depths.append(depth)
 
 class ReactionRoute:
-    def __init__(self, reactantString = None, productString = None):
+    def __init__(self, reactantString = None, productString = None, inputJson = None):
         # Possible coordination number for each atom.
         self._allowedCoordNum = {(1,-1):[],
                                  (1,0):[1],
@@ -125,13 +124,12 @@ class ReactionRoute:
         self._outputLevel = 2
         self._maxStep = 3
         self._maxExtraStep = 1
-        self._doAllCalculation = False
-        self._doPathCalculation = False
+        self._doCalculation = False
         self._structureScreen = True
         self._energyScreen = False
         self._intermediateThresh = 200.0
         self._gaussianKeywords = "# pm6 3-21g opt"
-        self._doTs = False
+        self._doTsSearch = False
         self._tsThresh = 200.0
         self._gaussianTsKeywords = '# pm6 3-21g opt=(ts,noeigen,calcfc,maxcyc=100)'
         self._energyBaseLine = 0.0
@@ -148,6 +146,44 @@ class ReactionRoute:
         self._brokenBonds = []
         self._createdBonds = []
         self._gsub = False
+        if inputJson is not None:
+            self.inputJson(inputJson)
+
+    def inputJson(self, inputJson):
+        import json
+        params = json.loads(inputJson)
+        if 'reactant' in params:
+            self._reactantString = params['reactant']
+        if 'product' in params:
+            self._productString = params['product']
+        if 'maxStep' in params:
+            self._maxStep = params['maxStep']
+        if 'maxExtraStep' in params:
+            self._maxExtraStep = params['maxExtraStep']
+        if 'doCalculation' in params:
+            self._doCalculation = params['doCalculation']
+        if 'structureScreen' in params:
+            self._structureScreen = params['structureScreen']
+        if 'energyScreen' in params:
+            self._energyScreen = params['energyScreen']
+        if 'intermediateThresh' in params:
+            self._intermediateThresh = params['intermediateThresh']
+        if 'gaussianKeywords' in params:
+            self._gaussianKeywords = params['gaussianKeywords']
+        if 'doTsSearch' in params:
+            self._doTsSearch = params['doTsSearch']
+        if 'tsThresh' in params:
+            self._tsThresh = params['tsThresh']
+        if 'gaussianTsKeywords' in params:
+            self._gaussianTsKeywords = params['gaussianTsKeywords']
+        if 'ignoreList' in params:
+            self._ignoreList = set(params['ignoreList'])
+        if 'activeList' in params:
+            self._activeList = set(params['activeList'])
+        if 'gsub' in params:
+            self._gsub = params['gsub']
+        if 'outputLevel' in params:
+            self._outputLevel = params['outputLevel']
 
     def canBreakOrFormBond(self, atom, breakOrForm, nElec):
         # Decide if an atom can break or form bond in a certain way (get or lose certain number of electrons)
@@ -239,7 +275,7 @@ class ReactionRoute:
                         return True
         return False
 
-    def doGaussian(self, mol, fullFileName, gsub=self._gsub):
+    def doGaussian(self, mol, fullFileName):
         molCopy = ob.OBMol(mol)
         molCopy.SetTitle("ReactionRoute")
         inputFile = open("gaussian/"+fullFileName+".gjf", 'w')
@@ -252,15 +288,15 @@ class ReactionRoute:
             if c == '(' or c == ')' or c == '$':
                 gaussianCall += '\\'
             gaussianCall += c
-        if gsub:
+        if self._gsub:
             print("gsub -fastq gaussian/"+gaussianCall+".gjf")
             logging.info("gsub -fastq gaussian/"+gaussianCall+".gjf")
-            output = subprocess.check_output('gsub -fastq gaussian/'+gaussianCall+'.gjf', shell=True)
+            output = subprocess.check_output('cd gaussian; gsub -fastq '+gaussianCall+'.gjf; cd ..', shell=True)
             jobId = output.split()[7]
             while True:
                 time.sleep(10)
                 outputQstat = subprocess.check_output('qstat', shell=True)
-                if jobID not in outputQstat:
+                if jobId not in outputQstat:
                     break
         else:
             print("gdv gaussian/"+gaussianCall+".gjf")
@@ -342,7 +378,7 @@ class ReactionRoute:
         q.append(head)
         self._reactionMap[self._reactantString] = head
         self._energyMap = {self._reactantString: 0.0}
-        if self._doPathCalculation:
+        if self._doCalculation:
             self._energyBaseLine = self.computeQMEnergy(reactantMol, "gaussian", self._gaussianKeywords, self._fragmentEnergyMap)
         else:
             self._energyBaseLine = 0.0
@@ -684,6 +720,7 @@ class ReactionRoute:
             os.system("mkdir static/pics")
         dotFile = open("dot/dot.gv","w")
         dotFile.write("digraph G  {\nconcentrate = true\n")
+        edges = []
         while len(q) > 0:
             qSize = len(q)
             for nLevel in range(qSize):
@@ -694,18 +731,20 @@ class ReactionRoute:
                     formatString = 'svg'
                     picFile = open("static/pics/"+fileString+'.'+formatString, 'w')
                     picFile.write(printMol(fromSmiToMol(currEdge.node.smiles), "svg"))
-                    if self._doPathCalculation:
+                    if self._doCalculation:
                         dotFile.write("    \""+currEdge.node.smiles+"\" [image = \"static/pics/"+fileString+'.'+formatString+"\", label = \""+str(currEdge.node.energy)+" kcal/mol\", shape = none, labelloc = b]\n")
                     else:
                         dotFile.write("    \""+currEdge.node.smiles+"\" [image = \"static/pics/"+fileString+'.'+formatString+"\", label = \"\", shape = none, labelloc = b]\n")
                     for molSmiles, nextEdge in currEdge.node.neighbors.items():
                         if pathOnly and nextEdge.onPath or not pathOnly:
                             q.append(nextEdge)
-                            if self._doTs:
+                            edges.append((currEdge.node.smiles, nextEdge.node.smiles))
+                            if self._doTsSearch:
                                 dotFile.write('   "{}" -> "{}" [ label="{:<8}" ];\n'.format(currEdge.node.smiles, nextEdge.node.smiles, str(nextEdge.tsEnergy)))
                             else:
                                 dotFile.write('   "{}" -> "{}";\n'.format(currEdge.node.smiles, nextEdge.node.smiles))
         dotFile.write("}\n")
+        return edges
 
     def findDfsPath(self, head, end, paths, targetLeastStep, path = None):
         if path is None:
@@ -729,7 +768,7 @@ class ReactionRoute:
                 if breakPath:
                     break
                 if i+1 < len(path):
-                    if self._doPathCalculation and self._energyScreen:
+                    if self._doCalculation and self._energyScreen:
                         if path[i+1].smiles not in self._energyMap:
                             absoluteEnergy = self.computeQMEnergy(path[i+1].mol, "gaussian", self._gaussianKeywords, self._fragmentEnergyMap)
                             logging.debug("absoluteEnergy is %f kcal/mol"%(absoluteEnergy))
@@ -766,7 +805,7 @@ class ReactionRoute:
             for i, node in enumerate(path):
                 if node not in visitedNode:
                     visitedNode.add(node)
-                    if self._doPathCalculation:
+                    if self._doCalculation:
                         node.energy = self.computeQMEnergy(node.mol, "gaussian", self._gaussianKeywords, self._fragmentEnergyMap)
                     dotFile.write("    \"" + node.smiles + "\" [image = \"static/pics/" + smilesToFilename(node.smiles) + ".svg\", label = \""+ str(node.energy) + " kcal/mol\", shape = none, labelloc = b]\n")
                 if i < len(path)-1:
@@ -864,23 +903,39 @@ class ReactionRoute:
 
 
 if __name__ == "__main__":
-    logging.basicConfig(filename = "result", level=logging.DEBUG)
-    rr = ReactionRoute(reactantString=sys.argv[1], productString=sys.argv[2])
-    if '-e' in sys.argv:
-        rr._doPathCalculation = True
-    if '-q' in sys.argv:
-        rr._gsub = True
+    logging.basicConfig(filename = "log", level=logging.DEBUG)
+    rr = ReactionRoute()
+    flags = ''
+    for i, arg in enumerate(sys.argv):
+        if arg[-5:] == '.json':
+            f = open(arg)
+            rr.inputJson(f.read())
+            f.close()
+        elif arg[0] == '-':
+            if len(arg) == 2:
+                if arg[1] == 'r':
+                    rr._reactantString = sys.argv[i+1]
+                elif arg[1] == 'p':
+                    rr._productString = sys.argv[i+1]
+            else:
+                flags += arg[1:]
+    for flag in flags:
+        if flag == 'e':
+            rr._doCalculation = True
+            rr._energyScreen = True
+        elif flag == 'q':
+            rr._gsub = True
+
     head, target= rr.isomerSearch()
     rr.printTextReactionMap(head)
     paths = []
-
     rr.findDfsPath(head, target, paths, rr._targetLeastStep)
     rr.labelPathItems(paths, head)
-    if rr._doTs:
+
+    if rr._doTsSearch:
         rr.findTsOnPath(head)
-    rr.printGraphicReactionMap(head)
-    if not os.path.isdir('reactionmap'):
-        os.system('mkdir reactionmap')
-    os.system("dot -Tsvg dot/dot.gv -o "+sys.argv[1]+'-'+sys.argv[2]+".svg")
+    edges = rr.printGraphicReactionMap(head)
+    print(edges)
+    os.system("dot -Tsvg dot/dot.gv -o "+rr._reactantString+'-'+rr._productString+".svg")
     # rr.printGraphicPathMap(paths)
     # os.system("dot -Tsvg dot/paths.gv -o paths-"+sys.argv[1]+".svg")

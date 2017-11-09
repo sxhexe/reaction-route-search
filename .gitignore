@@ -6,7 +6,7 @@ dot/
 /openbabel2.4.1Install/*
 pics/
 gaussian/
-*result
+*log
 *result.html
 *fort.7
 
