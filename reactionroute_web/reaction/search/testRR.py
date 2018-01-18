@@ -8,7 +8,7 @@ class TestRR(unittest.TestCase):
         rr.findDfsPath(head, target, paths, rr._targetLeastStep)
         rr.labelPathItems(paths, head)
         edges = rr.printGraphicReactionMap(head)
-        return edges
+        return edges.sort()
 
     def test_addition(self):
         rr = ReactionRoute(inputJson='{"reactant": "C=C.Cl", "product": "CCCl"}')
@@ -17,7 +17,7 @@ class TestRR(unittest.TestCase):
                                  ("C=C.Cl", "ClC=C.[H][H]"),
                                  ("C=C.Cl", "CCCl"),
                                  ("C[CH2+].[Cl-]", "CCCl"),
-                                 ("ClC=C.[H][H]", "CCCl")])
+                                 ("ClC=C.[H][H]", "CCCl")].sort())
 
     def test_esterification(self):
         rr = ReactionRoute(inputJson='{\
@@ -36,7 +36,7 @@ class TestRR(unittest.TestCase):
                                  ('[O-]C=O.C[OH2+]', 'COC=O.O'),
                                  ('OOC=O.C', 'COC=O.O'),
                                  ('[O-]C=O.O.[CH3+]', 'COC=O.O'),
-                                 ('C[OH+]C=O.[OH-]', 'COC=O.O')])
+                                 ('C[OH+]C=O.[OH-]', 'COC=O.O')].sort())
 
     def test_elimination(self):
         rr = ReactionRoute(inputJson='{\
@@ -51,6 +51,22 @@ class TestRR(unittest.TestCase):
                                  ('CCCO', '[CH-](C[OH2+])C'),
                                  ('[CH2-]C([OH2+])C', 'CC=C.O'),
                                  ('CC=CO.[H][H]', 'CC=C.O'),
-                                 ('[CH-](C[OH2+])C', 'CC=C.O')])
+                                 ('[CH-](C[OH2+])C', 'CC=C.O')].sort())
+
+    def test_bromonium(self):
+        rr = ReactionRoute(inputJson='{\
+                                      "reactant": "C=C.[Br][Br]",\
+                                      "product": "BrCCBr"\
+                                      }')
+        edges = self.routine(rr)
+        self.assertEqual(edges, [('BrBr.C=C', 'BrC[CH2+].[Br-]'),
+                                 ('BrBr.C=C', '[CH2-]C[Br+]Br'),
+                                 ('BrBr.C=C', 'BrC=C.Br'),
+                                 ('BrBr.C=C', 'BrCCBr'),
+                                 ('BrBr.C=C', '[Br+]1CC1.[Br-]'),
+                                 ('BrC[CH2+].[Br-]', 'BrCCBr'),
+                                 ('[CH2-]C[Br+]Br', 'BrCCBr'),
+                                 ('BrC=C.Br', 'BrCCBr'),
+                                 ('[Br+]1CC1.[Br-]', 'BrCCBr')].sort())
 if __name__ == '__main__':
     unittest.main()

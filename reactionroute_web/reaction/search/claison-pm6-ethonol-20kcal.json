@@ -1,0 +1,5 @@
+{
+  "reactant": "CCC(=O)OCC.CCC(=O)OCC.CC[O-]",
+  "product": "CCC(=O)C(C)C(=O)OCC.CC[O-].CCO",
+  "activeList": [1,2,3,4,8,9,11,16,30]
+}

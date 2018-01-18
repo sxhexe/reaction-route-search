@@ -1,5 +1,7 @@
 {
   "reactant": "OC=O.CO",
   "product": "COC=O.O",
-  "activeList": [1, 4, 5, 6, 11]
+  "activeList": [1, 4, 5, 6, 11],
+  "doCalculation": true,
+  "gsub": true
 }
