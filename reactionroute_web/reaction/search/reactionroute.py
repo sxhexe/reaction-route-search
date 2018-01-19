@@ -1,10 +1,12 @@
 import openbabel as ob
+import pybel
 import sys
 import logging
 import os
 import subprocess
 import time
 import sqlite3
+import numpy as np
 from GaussianHelper import *
 from collections import deque
 from seam_ts_search import *
@@ -70,6 +72,42 @@ def smilesToSysCall(smiles):
             call += '\\'
         call += c
     return call
+
+def numValenceElectron(atomicNumber):
+    if atomicNumber <= 2:
+        return atomicNumber
+    elif atomicNumber <= 10:
+        return atomicNumber - 2
+    elif atomicNumber <= 18:
+        return atomicNumber - 10
+    elif atomicNumber <= 30:
+        return atomicNumber - 18
+    elif atomicNumber <= 36:
+        return atomicNumber - 28
+    elif atomicNumber <= 48:
+        return atomicNumber - 36
+    elif atomicNumber <= 54:
+        return atomicNumber - 46
+    else:
+        print('Atomic number not supported. Either it is from the 6th row and below or it is an invalid number')
+        return 0
+
+def molToMat(mol):
+    n = mol.NumAtoms()
+    mat = np.array([[0 for _i in range(n+1)] for _j in range(n+1)])
+    for atom in ob.OBMolAtomIter(mol):
+        i = atom.GetIdx()
+        nBonds = 0
+        for bond in ob.OBAtomBondIter(atom):
+            nBonds += bond.GetBondOrder()
+        nonBondingElecs = numValenceElectron(atom.GetAtomicNum()) - nBonds - atom.GetFormalCharge()
+        mat[i][i] = nonBondingElecs
+    for bond in ob.OBMolBondIter(mol):
+        i = bond.GetBeginAtomIdx()
+        j = bond.GetEndAtomIdx()
+        mat[i][j] = bond.GetBondOrder()
+        mat[j][i] = mat[i][j]
+    return mat
 
 class EnergyReadingError(Exception):
     def __init__(self, value):
@@ -1047,5 +1085,3 @@ if __name__ == "__main__":
 
     print("dot -Tsvg dot/dot.gv -o dot/{}.svg".format(inputName))
     os.system("cd dot; dot -Tsvg dot.gv -o {}.svg; cd ..".format(inputName))
-    # rr.printGraphicPathMap(paths)
-    # os.system("dot -Tsvg dot/paths.gv -o paths-"+sys.argv[1]+".svg")
