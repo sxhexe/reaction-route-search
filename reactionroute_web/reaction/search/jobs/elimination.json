@@ -1,7 +1,0 @@
-{
-  "reactant": "CCCO",
-  "product": "CC=C.O",
-  "activeList": [2, 3, 4, 8, 11, 12],
-  "gaussianKeywords": "#p pm6 scrf=(cpcm,solvent=water)",
-  "doCalculation": true
-}
