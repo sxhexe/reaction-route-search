@@ -8,7 +8,7 @@ import time
 import sqlite3
 import numpy as np
 from GaussianHelper import *
-from collections import deque
+from collections import deque, defaultdict
 from seam_ts_search import *
 
 def printMol(mol,fileFormat = "gjf", keywords = None, printOut = False):
@@ -108,7 +108,7 @@ def atomTotalBondOrder(atom):
 
 def molToMat(mol):
     n = mol.NumAtoms()
-    mat = np.array([[0 for _i in range(n+1)] for _j in range(n+2)])
+    mat = np.array([[0 for _i in range(n+1)] for _j in range(n+3)])
     for i in range(1, n+1):
         mat[i][0] = mol.GetAtom(i).GetAtomicNum()
         mat[0][i] = mat[i][0]
@@ -120,6 +120,7 @@ def molToMat(mol):
         nonBondingElecs = numValenceElectron(atom.GetAtomicNum()) - nBonds - atom.GetFormalCharge()
         mat[i][i] = nonBondingElecs
         mat[n+1][i] = nBonds
+        mat[n+2][i] = atom.GetFormalCharge()
     for bond in ob.OBMolBondIter(mol):
         i = bond.GetBeginAtomIdx()
         j = bond.GetEndAtomIdx()
@@ -128,7 +129,7 @@ def molToMat(mol):
     return mat
 
 def matToMol(mat):
-    n = len(mat) - 1
+    n = len(mat) - 3
     mol = ob.OBMol()
     mol.BeginModify()
     for i in range(1, n+1):
@@ -190,6 +191,7 @@ class ReactionRoute:
         self._allowedCoordNum = {(1,-1):[],
                                  (1,0):[1],
                                  (1,1):[0],
+                                 (3,0):[3],
                                  (3,1):[],
                                  (4,0):[2],
                                  (5,-1):[2],
@@ -219,6 +221,14 @@ class ReactionRoute:
                                  (35,0):[1],
                                  (35,-1):[0],
                                  (35,1):[2]}
+        self._minFc = {}
+        for pair, tboList in self._allowedCoordNum.items():
+            if tboList != []:
+                if pair[0] not in self._minFc:
+                    self._minFc[pair[0]] = pair[1]
+                else:
+                    self._minFc[pair[0]] = min(self._minFc[pair[0]], pair[1])
+
         self._outputLevel = 2
         self._maxStep = 3
         self._maxExtraStep = 1
@@ -231,8 +241,8 @@ class ReactionRoute:
         self._tsThresh = 200.0
         self._gaussianTsKeywords = '# pm6 3-21g opt=(ts,noeigen,calcfc,maxcyc=100)'
         self._energyBaseLine = 0.0
-        self._ignoreList = set()
-        self._activeList = set()
+        self.ignoreList = set()
+        self.activeList = set()
         self._invalidStructures = set()
         self._reactantString = reactantString
         self._productString = productString
@@ -247,6 +257,9 @@ class ReactionRoute:
         self._save = True
         self._pathOnly = True
         self._preEnergyScreen = False
+        self._matrixForm = True
+        self._filterFc = True
+        self._noProduct = False
         if inputJson is not None:
             self.inputJson(inputJson)
 
@@ -278,9 +291,9 @@ class ReactionRoute:
         if 'gaussianTsKeywords' in params:
             self._gaussianTsKeywords = params['gaussianTsKeywords']
         if 'ignoreList' in params:
-            self._ignoreList = set(params['ignoreList'])
+            self.ignoreList = set(params['ignoreList'])
         if 'activeList' in params:
-            self._activeList = set(params['activeList'])
+            self.activeList = set(params['activeList'])
         if 'gsub' in params:
             self._gsub = params['gsub']
         if 'outputLevel' in params:
@@ -291,6 +304,8 @@ class ReactionRoute:
             self._pathOnly = params['pathOnly']
         if 'preEnergyScreen' in params:
             self._preEnergyScreen = params['preEnergyScreen']
+        if 'matrixForm' in params:
+            self._matrixForm = params['matrixForm']
 
     def canBreakOrFormBond(self, atom, breakOrForm, nElec):
         # Decide if an atom can break or form bond in a certain way (get or lose certain number of electrons)
@@ -624,24 +639,22 @@ class ReactionRoute:
 
     # def getOxidations(self, mat, compact=True): # O(n^2) time, O(n) space
     #     oxidations = set()
-    #     nAtom = len(mat) - 1
-    #     for i in range(1, nAtom):
+    #     for i in range(1, self.nAtom):
     #         for j in range(1, i):
     #             if mat[i][j] >= 1:
     #                 oxidations.add((i, j))
-    #     for i in range(1, nAtom):
+    #     for i in range(1, self.nAtom):
     #         if mat[i][i] >= 2:
     #             oxidations.add((i, i))
     #
     #     return oxidations
     #
     # def checkMat(self, mat, delta=None):
-    #     nAtom = len(mat) - 1
     #     if delta is not None:
     #         for i, j in delta:
     #             mat[i][j] += delta[(i, j)]
     #     result = True
-    #     for i in range(1, nAtom + 1):
+    #     for i in range(1, self.nAtom + 1):
     #         nBonds = sum(mat[i][1:]) - mat[i][i]
     #         formalCharge = numValenceElectron(mat[i][0]) - nBonds + mat[i][i]
     #         if nBonds not in self._allowedCoordNum[(mat[i][0], formalCharge)]:
@@ -652,6 +665,19 @@ class ReactionRoute:
     #             mat[i][j] -= delta[(i, j)]
     #     return result
 
+    def checkChangeTable(self, molMat, changeTable, tboChange, fcChange):
+        for atom in tboChange.keys() + fcChange.keys():
+            if molMat[self.nAtom+1][atom] + tboChange[atom] not in self._allowedCoordNum.get((molMat[0][atom], molMat[self.nAtom+2][atom] + fcChange[atom]), []):
+                return False
+        return True
+
+    def applyChanges(self, molMat, changeTable, tboChange, fcChange):
+        for item in changeTable.items():
+            molMat[item[0][0]][item[0][1]] += item[1]
+        for item in tboChange.items():
+            molMat[self.nAtom+1][item[0]] += item[1]
+        for item in fcChange.items():
+            molMat[self.nAtom+2][item[0]] += item[1]
 
     def isomerSearch(self):
         reactantMol = strToMol('smi', self._reactantString)
@@ -659,22 +685,23 @@ class ReactionRoute:
         logging.info("reactant = {}".format(self._reactantString))
         reactantMol.AddHydrogens()
         printMol(reactantMol, fileFormat = "gjf", printOut = True)
-        productMol = strToMol('smi', self._productString)
-        self._productString = getCanonicalSmiles(productMol)
-        logging.info("product = {}".format(self._productString))
+        if not self._noProduct:
+            productMol = strToMol('smi', self._productString)
+            self._productString = getCanonicalSmiles(productMol)
+            logging.info("product = {}".format(self._productString))
 
-        nAtom = reactantMol.NumAtoms()
-        # for atom in ob.OBMolAtomIter(reactantMol):
-        #     d = ob.OBPairData()
-        #     d.SetAttribute('nLonePair')
-        #     nLonePair = numValenceElectron(atom.GetAtomicNum()) - atomTotalBondOrder(atom) + atom.GetFormalCharge()
-        #     d.SetValue(str(nLonePair))
-        #     atom.CloneData(d)
+        self.nAtom = reactantMol.NumAtoms()
 
-        if self._activeList and not self._ignoreList:
-            allset = set(range(nAtom+1))
-            self._ignoreList = allset - self._activeList
-        logging.info("ignoreList = {}".format(self._ignoreList))
+        if self.activeList and not self.ignoreList:
+            allset = set(range(1, self.nAtom+1))
+            self.ignoreList = allset - self.activeList
+        elif self.ignoreList and not self.activeList:
+            allset = set(range(1, self.nAtom+1))
+            self.activeList = allset - self.ignoreList
+        elif not self.activeList and not self.ignoreList:
+            self.activeList = set(range(1, self.nAtom+1))
+
+        logging.info("ignoreList = {}".format(self.ignoreList))
         q = deque()
         head = ReactionGraphNode(mol=reactantMol)
         q.append(head)
@@ -702,21 +729,20 @@ class ReactionRoute:
                     continue
                 currMol = ob.OBMol(currNode.mol)
 
-                # oxidations = {'bond': set(), 'atom': set()}
-                # for atom in ob.OBMolAtomIter(currMol):
-                #     nLonePair = numValenceElectron(atom.GetAtomicNum()) - atomTotalBondOrder(atom) + atom.GetFormalCharge()
-                #     if nLonePair > 0:
-                #         oxidations['atom'].add(atom)
-                # for bond in ob.OBMolBondIter(currMol):
-                #     oxidations['bond'].add(bond)
+                oxidations = {'bond': set(), 'atom': set()}
+                for atom in ob.OBMolAtomIter(currMol):
+                    nLonePair = numValenceElectron(atom.GetAtomicNum()) - atomTotalBondOrder(atom) + atom.GetFormalCharge()
+                    if nLonePair > 0:
+                        oxidations['atom'].add(atom)
+                for bond in ob.OBMolBondIter(currMol):
+                    oxidations['bond'].add(bond)
 
-                def addMol(oxidized, reduced):
+                def addMol(oxidized, reduced, tempMat=None):
                     logging.debug('in addMol')
-                    # for atom in ob.OBMolAtomIter(newMol):
-                    #     printAtom(atom)
-                    #     logging.debug('formal charge is {}'.format(atom.GetFormalCharge()))
-                    # for bond in ob.OBMolBondIter(newMol):
-                    #     printBond(bond)
+                    logging.debug('oxidized: {}\nreduced: {}'.format(oxidized, reduced))
+                    if self._matrixForm:
+                        # logging.debug('\n'+str(tempMat))
+                        newMol = matToMol(tempMat)
                     newMolSmiles = getCanonicalSmiles(newMol)
                     logging.info("newSmiles = "+newMolSmiles)
                     if newMolSmiles == self._productString:
@@ -748,6 +774,7 @@ class ReactionRoute:
                                 newNode.energy = energy
                                 self._reactionMap[newMolSmiles] = newNode
                                 if newMolSmiles not in currNode.neighbors:
+                                    logging.info('adding the edge')
                                     currNode.neighbors[newMolSmiles] = ReactionGraphEdge(currNode, newNode, oxidized, reduced)
                                     q.append(newNode)
                             else:
@@ -756,84 +783,209 @@ class ReactionRoute:
                             newNode = ReactionGraphNode(mol=newMol, depth=nStep)
                             self._reactionMap[newMolSmiles] = newNode
                             if newMolSmiles not in currNode.neighbors:
+                                logging.info('adding the edge')
                                 currNode.neighbors[newMolSmiles] = ReactionGraphEdge(currNode, newNode, oxidized, reduced)
                                 q.append(newNode)
                     else:
                         logging.info("This molecule has been processed")
                         if currNode.smiles != newMolSmiles:
-                            logging.debug("adding {} - {}".format(currNode.smiles, newMolSmiles))
-                            logging.debug("Although this molecule has been added to reactionMap, it reveals a new route. Adding only the edge...")
                             # self._reactionMap[newMolSmiles].depths.append(nStep)
                             if newMolSmiles not in currNode.neighbors:
+                                logging.debug("adding {} - {}".format(currNode.smiles, newMolSmiles))
+                                logging.debug("Although this molecule has been added to reactionMap, it reveals a new route. Adding only the edge...")
                                 currNode.neighbors[newMolSmiles] = ReactionGraphEdge(currNode, self._reactionMap[newMolSmiles], oxidized, reduced)
                     logging.debug("finish adding this molecule, no matter added or not")
 
-                # starting transformations
-                # logging.info('atoms that can be oxidated (has lone pair)')
-                # for atom1 in oxidations['atom']: # lone pair only goes to bonds (atom1 to bond)
-                #     printAtom(atom1)
-                #     for atom2 in ob.OBMolAtomIter(currMol):
-                #         if self.obeyLuisRule(atom1, 1, -2) and self.obeyLuisRule(atom2, 1, 2):
-                #             newMol = ob.OBMol(currMol)
-                #             self.moveElec(newMol, None, atom1.GetIdx(), atom2.GetIdx(), 2)
-                #             addMol()
-                # logging.info('bonds that can be oxidated (break bond)')
-                # for bond1 in oxidations['bond']:
-                #     printBond(bond1)
-                #     atom1 = bond1.GetBeginAtom()
-                #     atom2 = bond1.GetEndAtom()
-                #     if self.obeyLuisRule(atom1, -1, -2) and self.obeyLuisRule(atom2, -1, 2): # bond to atom2
-                #         newMol = ob.OBMol(currMol)
-                #         self.moveElec(newMol, atom1.GetIdx(), atom2.GetIdx(), None, 2)
-                #         addMol()
-                #     if self.obeyLuisRule(atom1, -1, 2) and self.obeyLuisRule(atom2, -1, -2): # bond to atom1
-                #         newMol = ob.OBMol(currMol)
-                #         self.moveElec(newMol, atom2.GetIdx(), atom1.GetIdx(), None, 2)
-                #         addMol()
-                #     for atom3 in ob.OBMolAtomIter(currMol): # bond to bond
-                #         if self.obeyLuisRule(atom3, 1, 2):
-                #             if self.obeyLuisRule(atom1, -1, -2):
-                #                 newMol = ob.OBMol(currMol)
-                #                 self.moveElec(newMol, atom1.GetIdx(), atom2.GetIdx(), atom3.GetIdx(), 2)
-                #                 addMol()
-                #             elif self.obeyLuisRule(atom2, -1, -2):
-                #                 newMol = ob.OBMol(currMol)
-                #                 self.moveElec(newMol, atom2.GetIdx(), atom1.GetIdx(), atom3.GetIdx(), 2)
-                #                 addMol()
+                if self._matrixForm:
+                    if self._filterFc:
+                        molMat = molToMat(currMol)
+                        logging.debug('\n'+str(molMat))
+                        eSources = set()
+                        for i in self.activeList:
+                            if molMat[i][i] > 0:
+                                eSources.add((i,))
+                            for j in self.activeList:
+                                if j < i and molMat[i][j] > 0:
+                                    eSources.add((i, j))
 
-                eSources = set()
-                for atom in oxidations['atom']:
-                    eSources.add(atom.GetIdx())
-                for bond in oxidations['bond']:
-                    eSources.add((bond.GetBeginAtom().GetIdx(), bond.GetEndAtom().GetIdx()))
-                eTargets = set()
-                for i in range(1, nAtom+1):
-                    eTargets.add(i)
-                    for j in range(i+1, nAtom+1):
-                        eTargets.add((i, j))
+                        def countChanges(atoms, redox): # redox = -1 if oxidation else 1
+                            if len(atoms) is 1:
+                                i = atoms[0]
+                                changeTable[(i, i)] += 2 * redox
+                                fcChange[i] -= 2 * redox
+                            else:
+                                i, j = atoms
+                                changeTable[(i, j)] += 1 * redox
+                                changeTable[(j, i)] += 1 * redox
+                                fcChange[i] -= 1 * redox
+                                fcChange[j] -= 1 * redox
+                                tboChange[i] += 1 * redox
+                                tboChange[j] += 1 * redox
 
-                molMat = molToMat(currMol)
-                
-                for eSource1 in eSources:
-                    for eTarget1 in eTargets:
-                        newMol = ob.OBMol(currMol)
-                        self.oxidize(newMol, eSource1)
-                        self.reduce(newMol, eTarget1)
-                        if self.checkLuisRule(eSource1, eTarget1, mol=newMol):
-                            addMol([eSource1], [eTarget1])
+                        logging.debug('one pair')
+                        for eSource1 in eSources:
+                            canReduce = set()
+                            eTargets = set()
+                            for i in self.activeList:
+                                if molMat[self.nAtom+2][i] > self._minFc[molMat[0][i]]:
+                                    canReduce.add(i)
+                            for atom in eSource1:
+                                canReduce.add(atom)
+                            canReduce = list(canReduce)
+                            for i in range(len(canReduce)):
+                                eTargets.add((canReduce[i], ))
+                                for j in range(i):
+                                    eTargets.add((canReduce[i], canReduce[j]))
+                            logging.debug('eSource1: {}'.format(eSource1))
+                            logging.debug('eTargets: {}'.format(eTargets))
+                            for eTarget1 in eTargets:
+                                if set(eTarget1) == set(eSource1):
+                                    continue
+                                changeTable = defaultdict(int)
+                                tboChange = defaultdict(int) # total bond order change
+                                fcChange = defaultdict(int) # formal charge change
+                                countChanges(eSource1, -1)
+                                countChanges(eTarget1, 1)
+                                if self.checkChangeTable(molMat, changeTable, tboChange, fcChange):
+                                    # logging.debug('\n            This molecule is qualified. -----------------------    ')
+                                    tempMat = np.array(molMat)
+                                    self.applyChanges(tempMat, changeTable, tboChange, fcChange)
+                                    # logging.debug('\n'+str(tempMat))
+                                    addMol([eSource1], [eTarget1], tempMat)
+                            logging.debug('finishing this eTargets')
+
+                        logging.debug('two pairs')
+                        for eSource1 in eSources:
+                            for eSource2 in eSources:
+                                if set(eSource1) == set(eSource2): # we don't want to oxidize a specie twice. e.g. triple bond -> single bond
+                                    continue
+                                eTargets = set()
+                                canReduce = set()
+                                for i in self.activeList:
+                                    if molMat[self.nAtom+2][i] > self._minFc[molMat[0][i]]:
+                                        canReduce.add(i)
+                                for atom in eSource1:
+                                    canReduce.add(atom)
+                                for atom in eSource2:
+                                    canReduce.add(atom)
+                                canReduce = list(canReduce)
+                                for i in range(len(canReduce)):
+                                    eTargets.add((canReduce[i], ))
+                                    for j in range(i):
+                                        eTargets.add((canReduce[i], canReduce[j]))
+                                logging.debug('eSource1 = {}, eSource2 = {}'.format(eSource1, eSource2))
+                                logging.debug('eTargets: {}'.format(eTargets))
+                                for eTarget1 in eTargets:
+                                    for eTarget2 in eTargets:
+                                        if set(eTarget1) == set(eSource1) or set(eTarget2) == set(eSource2) or \
+                                           set(eTarget1) == set(eSource2) or set(eTarget2) == set(eSource1):
+                                            continue
+                                        changeTable = defaultdict(int)
+                                        tboChange = defaultdict(int) # total bond order change
+                                        fcChange = defaultdict(int) # formal charge change
+                                        countChanges(eSource1, -1)
+                                        countChanges(eTarget1, 1)
+                                        countChanges(eSource2, -1)
+                                        countChanges(eTarget2, 1)
+                                        if self.checkChangeTable(molMat, changeTable, tboChange, fcChange):
+                                            # logging.debug('\n            This molecule is qualified. -----------------------    ')
+                                            tempMat = np.array(molMat)
+                                            self.applyChanges(tempMat, changeTable, tboChange, fcChange)
+                                            # logging.debug('\n'+str(tempMat))
+                                            addMol([eSource1, eSource2], [eTarget1, eTarget2], tempMat)
+                                logging.debug('finishing this eTargets')
 
 
-                for eSource1 in eSources:
-                    for eSource2 in eSources:
+
+                    else: # no filter at ox/red level
+                        molMat = molToMat(currMol)
+                        logging.debug('\n'+str(molMat))
+                        eSources, eTargets = set(), set()
+                        for i in range(1, self.nAtom+1):
+                            if molMat[i][i] > 0:
+                                eSources.add((i,))
+                            eTargets.add((i,))
+                            for j in range(1, i):
+                                if molMat[i][j] > 0:
+                                    eSources.add((i, j))
+                                eTargets.add((i, j))
+                        logging.debug(eTargets)
+
+                        def countChanges(atoms, redox): # redox = -1 if oxidation else 1
+                            if len(atoms) is 1:
+                                changeTable[(atoms[0], atoms[0])] += 2 * redox
+                                fcChange[atoms[0]] -= 2 * redox
+                            else:
+                                changeTable[atoms[0], atoms[1]] += 1 * redox
+                                changeTable[atoms[1], atoms[0]] += 1 * redox
+                                fcChange[atoms[0]] -= 1 * redox
+                                fcChange[atoms[1]] -= 1 * redox
+                                tboChange[atoms[0]] += 1 * redox
+                                tboChange[atoms[1]] += 1 * redox
+
+                        for eSource1 in eSources:
+                            for eTarget1 in eTargets:
+                                changeTable = defaultdict(int)
+                                tboChange = defaultdict(int) # total bond order change
+                                fcChange = defaultdict(int) # formal charge change
+                                countChanges(eSource1, -1)
+                                countChanges(eTarget1, 1)
+                                if self.checkChangeTable(molMat, changeTable, tboChange, fcChange):
+                                    # logging.debug('\n            This molecule is qualified. -----------------------    ')
+                                    tempMat = np.array(molMat)
+                                    self.applyChanges(tempMat, changeTable, tboChange, fcChange)
+                                    # logging.debug('\n'+str(tempMat))
+                                    addMol([eSource1], [eTarget1], tempMat)
+
+                        for eSource1 in eSources:
+                            for eSource2 in eSources:
+                                for eTarget1 in eTargets:
+                                    for eTarget2 in eTargets:
+                                        changeTable = defaultdict(int)
+                                        tboChange = defaultdict(int) # total bond order change
+                                        fcChange = defaultdict(int) # formal charge change
+                                        countChanges(eSource1, -1)
+                                        countChanges(eTarget1, 1)
+                                        countChanges(eSource2, -1)
+                                        countChanges(eTarget2, 1)
+                                        if self.checkChangeTable(molMat, changeTable, tboChange, fcChange):
+                                            # logging.debug('\n            This molecule is qualified. -----------------------    ')
+                                            tempMat = np.array(molMat)
+                                            self.applyChanges(tempMat, changeTable, tboChange, fcChange)
+                                            # logging.debug('\n'+str(tempMat))
+                                            addMol([eSource1, eSource2], [eTarget1, eTarget2], tempMat)
+
+                else:
+                    eSources = set()
+                    for atom in oxidations['atom']:
+                        eSources.add(atom.GetIdx())
+                    for bond in oxidations['bond']:
+                        eSources.add((bond.GetBeginAtom().GetIdx(), bond.GetEndAtom().GetIdx()))
+                    eTargets = set()
+                    for i in range(1, self.nAtom+1):
+                        eTargets.add(i)
+                        for j in range(i+1, self.nAtom+1):
+                            eTargets.add((i, j))
+
+                    for eSource1 in eSources:
                         for eTarget1 in eTargets:
-                            for eTarget2 in eTargets:
-                                newMol = ob.OBMol(currMol)
-                                self.oxidize(newMol, eSource1)
-                                self.oxidize(newMol, eSource2)
-                                self.reduce(newMol, eTarget1)
-                                self.reduce(newMol, eTarget2)
-                                if self.checkLuisRule(eSource1, eSource2, eTarget1, eTarget2, mol=newMol):
-                                    addMol([eSource1, eSource2], [eTarget1, eTarget2])
+                            newMol = ob.OBMol(currMol)
+                            self.oxidize(newMol, eSource1)
+                            self.reduce(newMol, eTarget1)
+                            if self.checkLuisRule(eSource1, eTarget1, mol=newMol):
+                                addMol([eSource1], [eTarget1])
+
+                    for eSource1 in eSources:
+                        for eSource2 in eSources:
+                            for eTarget1 in eTargets:
+                                for eTarget2 in eTargets:
+                                    newMol = ob.OBMol(currMol)
+                                    self.oxidize(newMol, eSource1)
+                                    self.oxidize(newMol, eSource2)
+                                    self.reduce(newMol, eTarget1)
+                                    self.reduce(newMol, eTarget2)
+                                    if self.checkLuisRule(eSource1, eSource2, eTarget1, eTarget2, mol=newMol):
+                                        addMol([eSource1, eSource2], [eTarget1, eTarget2])
 
 
                 # Now consider all possible elementary reaction rule.
@@ -857,7 +1009,7 @@ class ReactionRoute:
                 #         logging.debug("atom2 is {}, {}".format(atom2.GetIdx(), atom2.GetAtomicNum()))
                 #         if atom2 is None:
                 #             logging.error("atom2 is None!!!!")
-                #         if atom2.GetIdx() in self._ignoreList:
+                #         if atom2.GetIdx() in self.ignoreList:
                 #             continue
                 #         logging.debug("try breaking first bond {} - {}".format(atom1.GetIdx(), atom2.GetIdx()))
                 #         # import pdb; pdb.set_trace()
@@ -877,7 +1029,7 @@ class ReactionRoute:
                 #
                 #         for atom3 in ob.OBMolAtomIter(newMol):
                 #             logging.debug("atom3 is {}, {}".format(atom3.GetIdx(), atom3.GetAtomicNum()))
-                #             if atom3.GetIdx() in self._ignoreList or atom3 == atom1 or atom3 == atom2:
+                #             if atom3.GetIdx() in self.ignoreList or atom3 == atom1 or atom3 == atom2:
                 #                 continue
                 #             logging.debug("try making first bond {} - {}".format(atom2.GetIdx(), atom3.GetIdx()))
                 #             for tempAtom in twoElecGivers:
@@ -901,7 +1053,7 @@ class ReactionRoute:
                 #             for brokenBond2 in bondsOfAtom3:
                 #                 atom4 = brokenBond2.GetNbrAtom(atom3)
                 #                 logging.debug("atom4 is {}, {}".format(atom4.GetIdx(), atom4.GetAtomicNum()))
-                #                 if atom4.GetIdx() in self._ignoreList or atom4 == atom2 or atom4 == atom1:
+                #                 if atom4.GetIdx() in self.ignoreList or atom4 == atom2 or atom4 == atom1:
                 #                     continue
                 #                 logging.debug("try breaking second bond {} - {}".format(atom3.GetIdx(), atom4.GetIdx()))
                 #                 for tempAtom in zeroElecTakers:
@@ -949,7 +1101,7 @@ class ReactionRoute:
                 #
                 # for atom1 in ob.OBMolAtomIter(newMol):
                 #     logging.debug("atom1 is {}, {}".format(atom1.GetIdx(), atom1.GetAtomicNum()))
-                #     if atom1.GetIdx() in self._ignoreList:
+                #     if atom1.GetIdx() in self.ignoreList:
                 #         logging.debug("atom1 is ignored")
                 #         continue
                 #     logging.info("--------attempting cyclic concerted two bonds breakings and two bond formations----------")
@@ -957,7 +1109,7 @@ class ReactionRoute:
                 #     for brokenBond1 in bondsOfAtom1:
                 #         atom2 = brokenBond1.GetNbrAtom(atom1)
                 #         logging.debug("atom2 is {}, {}".format(atom2.GetIdx(), atom2.GetAtomicNum()))
-                #         if atom2.GetIdx() in self._ignoreList:
+                #         if atom2.GetIdx() in self.ignoreList:
                 #             logging.debug("atom2 is ignored")
                 #             continue
                 #         logging.debug("try breaking first bond {} - {}".format(atom1.GetIdx(), atom2.GetIdx()))
@@ -965,7 +1117,7 @@ class ReactionRoute:
                 #             logging.warning("bond {} - {} breaking failed".format(atom1.GetIdx(),atom2.GetIdx()))
                 #             continue
                 #         for atom3 in ob.OBMolAtomIter(newMol):
-                #             if atom3.GetIdx() in self._ignoreList:
+                #             if atom3.GetIdx() in self.ignoreList:
                 #                 logging.debug("atom3 is ignored")
                 #                 continue
                 #             if atom3 == atom1 or atom3 == atom2:
@@ -982,7 +1134,7 @@ class ReactionRoute:
                 #             for brokenBond2 in bondsOfAtom3:
                 #                 atom4 = brokenBond2.GetNbrAtom(atom3)
                 #                 logging.debug("atom4 is {}, {}".format(atom4.GetIdx(), atom4.GetAtomicNum()))
-                #                 if atom4.GetIdx() in self._ignoreList or atom4 == atom2 or atom4 == atom1:
+                #                 if atom4.GetIdx() in self.ignoreList or atom4 == atom2 or atom4 == atom1:
                 #                     continue
                 #                 logging.debug("try breaking second bond {} - {}".format(atom3.GetIdx(), atom4.GetIdx()))
                 #                 if self.breakBond(newMol, atom3, atom4, 2, 0) is None:
@@ -1018,8 +1170,10 @@ class ReactionRoute:
                 #         self.createNewBond(newMol, atom1, atom2, 2, 0)
 
 
-
-        logging.info("targetSmiles = "+self._productString)
+        if not self._noProduct:
+            logging.info("targetSmiles = "+self._productString)
+        else:
+            logging.info('no target provided')
         logging.info("targetLeastStep = {}".format(self._targetLeastStep))
         logging.info("===============End of the isomer search===============")
         if self._productString in self._reactionMap:
@@ -1243,34 +1397,37 @@ class ReactionRoute:
 if __name__ == "__main__":
     logging.basicConfig(filename = "log", level=logging.DEBUG, filemode='w')
     rr = ReactionRoute()
-    flags = ''
+    flags = {}
     inputName = None
+
     for i, arg in enumerate(sys.argv):
-        if arg[-5:] == '.json':
-            inputName = arg[:-5]
-            f = open(arg)
-            rr.inputJson(f.read())
-            f.close()
-        elif arg[0] == '-':
-            if len(arg) == 2:
-                if arg[1] == 'r':
-                    rr._reactantString = sys.argv[i+1]
-                elif arg[1] == 'p':
-                    rr._productString = sys.argv[i+1]
+        if arg[0] == '-':
+            if i+1 < len(sys.argv) and sys.argv[i+1][0] != '-':
+                flags[arg[1:]] = sys.argv[i+1]
             else:
-                flags += arg[1:]
-    for flag in flags:
-        if flag == 'e':
-            rr._doCalculation = True
-            rr._energyScreen = True
-        elif flag == 'q':
-            rr._gsub = True
+                flags[arg[1:]] = ''
+
+    if 'j' in flags:
+        inputName = flags['j'][:-5]
+        with open(inputName+'.json') as f:
+            rr.inputJson(f.read())
+    if 'r' in flags:
+        rr._reactantString = flags['r']
+    if 'p' in flags:
+        rr._productString = flags['p']
+    if 'e' in flags:
+        rr._doCalculation = True
+        rr._energyScreen = True
+    if 'q' in flags:
+        rr._gsub = True
+    if 'n' in flags:
+        rr._noProduct = True
 
     import cProfile
-    cProfile.run('head, target= rr.isomerSearch()', 'profile')
-    # head, target= rr.isomerSearch()
+    # cProfile.run('head, target= rr.isomerSearch()')
+    head, target= rr.isomerSearch()
     # rr.printTextReactionMap(head)
-    if target is not None:
+    if target is not None and not rr._noProduct:
         paths = []
         rr.findDfsPath(head, target, paths, rr._targetLeastStep)
         rr.labelPathItems(paths, head)
@@ -1289,4 +1446,6 @@ if __name__ == "__main__":
             with open('dot/dot.gv') as dotF_origin:
                 dotF.write(dotF_origin.read())
         print("dot -Tsvg dot/dot.gv -o dot/{}.svg".format(inputName))
-        os.system("cd dot; dot -Tsvg dot.gv -o {}.svg; cd ..".format(inputName))
+        os.system("cd dot")
+        os.system('dot -Tsvg dot.gv -o {}.svg'.format(inputName))
+        os.system('cd ..')
