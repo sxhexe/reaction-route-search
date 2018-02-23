@@ -7,6 +7,7 @@ import subprocess
 import time
 import sqlite3
 import numpy as np
+np.set_printoptions(threshold=np.inf, linewidth=150)
 from GaussianHelper import *
 from collections import deque, defaultdict
 from seam_ts_search import *
@@ -136,13 +137,45 @@ def matToMol(mat):
         mol.NewAtom(i)
         atom = mol.GetAtom(i)
         atom.SetAtomicNum(mat[i][0])
-        atom.SetFormalCharge(numValenceElectron(mat[i][0]) - sum(mat[i][1:]))# sum(mat[i][1:]) is the formal electron count on atom i
+        atom.SetFormalCharge(mat[n+2][i])
     for i in range(1, n+1):
         for j in range(1, i):
             if mat[i][j] != 0:
                 mol.AddBond(i, j, mat[i][j])
     return mol
 
+def separateFragments(pymol):
+    mol = pymol.OBMol
+    nAtom = len(pymol.atoms)
+    unvisited = set(range(1, nAtom+1))
+    q = deque([1])
+    fragments = [set()]
+    while q or unvisited:
+        if q:
+            curr = q.popleft()
+            unvisited.remove(curr)
+            fragments[-1].add(curr)
+        else:
+            curr = unvisited.pop()
+            fragments.append(set([curr]))
+        atom = mol.GetAtom(curr)
+        for nbr in ob.OBAtomAtomIter(atom):
+            nbrNum = nbr.GetIdx()
+            if nbrNum in unvisited:
+                q.append(nbrNum)
+    coords = []
+    for atom in pymol:
+        coords.append(list(atom.coords))
+    nFragments = len(fragments)
+    delta = -(nFragments-1) * 1.5
+    for fragment in fragments:
+        for atomIdx in fragment:
+            x, y, z = coords[atomIdx-1]
+            coords[atomIdx-1] = [x + delta, y + delta, z + delta]
+        delta += 5.0
+    coords = [item for sublist in coords for item in sublist ]
+    c_coords = ob.double_array(coords)
+    mol.SetCoordinates(c_coords)
 
 class EnergyReadingError(Exception):
     def __init__(self, value):
@@ -795,6 +828,7 @@ class ReactionRoute:
                                 logging.debug("Although this molecule has been added to reactionMap, it reveals a new route. Adding only the edge...")
                                 currNode.neighbors[newMolSmiles] = ReactionGraphEdge(currNode, self._reactionMap[newMolSmiles], oxidized, reduced)
                     logging.debug("finish adding this molecule, no matter added or not")
+                    # ====================the end of addMol====================
 
                 if self._matrixForm:
                     if self._filterFc:
@@ -807,6 +841,7 @@ class ReactionRoute:
                             for j in self.activeList:
                                 if j < i and molMat[i][j] > 0:
                                     eSources.add((i, j))
+                        logging.debug('eSources = {}'.format(eSources))
 
                         def countChanges(atoms, redox): # redox = -1 if oxidation else 1
                             if len(atoms) is 1:
@@ -1422,6 +1457,18 @@ if __name__ == "__main__":
         rr._gsub = True
     if 'n' in flags:
         rr._noProduct = True
+    if 'a' in flags:
+        pymol = pybel.readstring('smi', rr._reactantString)
+        mol = pymol.OBMol
+        builder = ob.OBBuilder()
+        builder.Build(mol)
+        separateFragments(pymol)
+        pymol.title = 'for select active atoms'
+        pymol.addh()
+        pymol.localopt()
+        with open('activeatoms.com', 'w') as f:
+            f.write(pymol.write('gjf'))
+        exit()
 
     import cProfile
     # cProfile.run('head, target= rr.isomerSearch()')
